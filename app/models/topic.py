@@ -12,7 +12,10 @@ class Topic(db.Model):
     description = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    votes = db.Column(db.Integer, default=0)  # New field for votes
+    topic_of_the_day = db.Column(db.Boolean, default=False)  # New field to mark Topic of the Day
 
+    
     # Relationships
     user = db.relationship('User', backref='topics') 
     comments = db.relationship('Comment', back_populates='topic')
