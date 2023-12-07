@@ -6,6 +6,9 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 
+import CreateTopicForm from './components/Topics/TopicForm'
+import TopicList from './components/Topics/TopicList' 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -23,6 +26,12 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path="/topics">
+            <TopicList/>
+          </Route>
+          <Route path="/topics/new">
+            <CreateTopicForm />
           </Route>
         </Switch>
       )}

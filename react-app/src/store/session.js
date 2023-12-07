@@ -31,14 +31,15 @@ export const authenticate = () => async (dispatch) => {
 
 export const login = (email, password) => async (dispatch) => {
 	const response = await fetch("/api/auth/login", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			email,
-			password,
-		}),
+	  method: "POST",
+	  headers: {
+		"Content-Type": "application/json",
+	  },
+	  body: JSON.stringify({
+		email,
+		password,
+	  }),
+	  credentials: 'include', // Include cookies with the request
 	});
 
 	if (response.ok) {
