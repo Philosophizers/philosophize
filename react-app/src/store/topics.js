@@ -8,6 +8,9 @@ const UPDATE_TOPIC = 'topics/UPDATE_TOPIC';
 const SET_TOPIC_OF_THE_DAY = 'topics/SET_TOPIC_OF_THE_DAY';
 const GET_COMMENTS = 'topics/GET_COMMENTS';
 const ADD_COMMENT = 'topics/ADD_COMMENT';
+const VOTE_FOR_TOPIC = 'topics/VOTE_FOR_TOPIC';
+const UNVOTE_FOR_TOPIC = 'topics/UNVOTE_FOR_TOPIC';
+const RESET_VOTES = 'topics/RESET_VOTES';
 
 
 // Action Creators
@@ -95,6 +98,24 @@ export const addComment = (comment) => ({
   comment
 });
 
+
+
+// export const voteForTopic = (topicId) => ({
+//   type: VOTE_FOR_TOPIC,
+//   topicId,
+// });
+
+export const voteForTopic = (updatedTopic) => ({
+  type: VOTE_FOR_TOPIC,
+  topic: updatedTopic,
+});
+
+export const unvoteForTopic = (topicId) => ({
+  type: UNVOTE_FOR_TOPIC,
+  topicId,
+});
+
+
 // Thunk for fetching the topic of the day
 export const fetchTopicOfTheDay = () => async (dispatch) => {
   const response = await fetch('/api/topics/topic-of-the-day');
@@ -113,8 +134,64 @@ export const fetchCommentsForTopic = (topicId) => async (dispatch) => {
   }
 };
 
-// Thunk for posting a new comment (if needed)
-// ...
+// export const castVote = (topicId) => async (dispatch) => {
+//   const response = await fetch(`/api/topics/${topicId}/vote`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     // Make sure to include credentials if your API requires authentication
+//     credentials: 'include',
+//   });
+
+//   if (response.ok) {
+//     dispatch(voteForTopic(topicId));
+//   } else {
+//     // Handle errors, e.g., user has already voted
+//     const data = await response.json();
+//     alert(data.message); // Or handle the error message in a more user-friendly way
+//   }
+// };
+
+export const castVote = (topicId) => async (dispatch) => {
+  const response = await fetch(`/api/topics/${topicId}/vote`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+  });
+
+  if (response.ok) {
+    const updatedTopic = await response.json();
+    console.log("Updated Topic:", updatedTopic); // Log to check the updated topic
+    dispatch(voteForTopic(updatedTopic));
+  } else {
+    const data = await response.json();
+    alert(data.message);
+  }
+};
+
+
+
+export const removeVote = (topicId) => async (dispatch) => {
+  const response = await fetch(`/api/topics/${topicId}/unvote`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    // Make sure to include credentials if your API requires authentication
+    credentials: 'include',
+  });
+
+  if (response.ok) {
+    dispatch(unvoteForTopic(topicId));
+  } else {
+    // Handle errors
+    const data = await response.json();
+    alert(data.message); // Or handle the error message in a more user-friendly way
+  }
+};
 
 // Adjust the initial state
 const initialState = {
@@ -163,7 +240,52 @@ export default function topicsReducer(state = initialState, action) {
       case ADD_COMMENT:
             // Logic to add a new comment to the state
             return { ...state, comments: { ...state.comments, [action.comment.id]: action.comment } };
-      
+  //     case VOTE_FOR_TOPIC:
+  //   return {
+  //     ...state,
+  //     topics: {
+  //       ...state.topics,
+  //       [action.topicId]: {
+  //         ...state.topics[action.topicId],
+  //         hasVoted: true
+  //       }
+  //     }
+  //   };
+  // case UNVOTE_FOR_TOPIC:
+  //   return {
+  //     ...state,
+  //     topics: {
+  //       ...state.topics,
+  //       [action.topicId]: {
+  //         ...state.topics[action.topicId],
+  //         hasVoted: false
+  //       }
+  //     }
+  //   };
+  case VOTE_FOR_TOPIC:
+    return {
+      ...state,
+      topics: {
+        ...state.topics,
+        [action.topic.id]: {
+          ...state.topics[action.topic.id],
+          ...action.topic // This will update the whole topic including vote_count
+        }
+      }
+    };
+
+  case UNVOTE_FOR_TOPIC:
+    return {
+      ...state,
+      topics: {
+        ...state.topics,
+        [action.topicId]: {
+          ...state.topics[action.topicId],
+          hasVoted: false,
+          vote_count: state.topics[action.topicId].vote_count - 1 // Decrement vote count
+        }
+      }
+    };
       default:
           return state;
   }

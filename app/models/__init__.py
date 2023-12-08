@@ -3,3 +3,4 @@ from .user import User
 from .comment import Comment
 from .resource import Resource
 from .topic import Topic
+from .vote import Vote

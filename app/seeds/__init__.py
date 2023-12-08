@@ -33,6 +33,7 @@ from .users import seed_users, undo_users
 from .topics import seed_topics, undo_topics
 from .comments import seed_comments, undo_comments
 from .resources import seed_resources, undo_resources
+from .votes import seed_votes, undo_votes
 
 from app.models import db
 
@@ -44,6 +45,7 @@ def seed():
     seed_topics()
     seed_comments()
     seed_resources()
+    seed_votes()
     print("All data seeded")
 
 @seed_commands.command("undo")
@@ -52,4 +54,5 @@ def undo():
     undo_topics()
     undo_comments()
     undo_resources()
+    undo_votes()
     print("All data cleared")
