@@ -18,6 +18,7 @@ def cast_vote():
 
     if vote_today:
         return jsonify({"message": "You have already voted today"}), 403
+    
 
     # If not, proceed with creating a new vote
     new_vote = Vote(user_id=current_user.id, topic_id=topic_id)
