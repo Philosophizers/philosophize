@@ -263,16 +263,19 @@ export default function topicsReducer(state = initialState, action) {
   //     }
   //   };
   case VOTE_FOR_TOPIC:
-    return {
+    console.log("Current State:", state); // Log current state
+    const updatedState = {
       ...state,
       topics: {
         ...state.topics,
         [action.topic.id]: {
           ...state.topics[action.topic.id],
-          ...action.topic // This will update the whole topic including vote_count
+          ...action.topic
         }
       }
     };
+    console.log("Updated State:", updatedState); // Log updated state
+    return updatedState;
 
   case UNVOTE_FOR_TOPIC:
     return {
