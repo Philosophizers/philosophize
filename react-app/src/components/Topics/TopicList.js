@@ -188,6 +188,7 @@ import { castVote, removeVote } from '../../store/topics';
 const TopicList = () => {
     const dispatch = useDispatch();
     const topics = useSelector(state => Object.values(state.topics));
+    const user = useSelector((state) => state.session.user);
     const [showForm, setShowForm] = useState(false);
     const [editingTopic, setEditingTopic] = useState(null);
 
@@ -322,6 +323,7 @@ const TopicList = () => {
       onDelete={handleDeleteTopic}
       onVote={handleVote}
       onUnvote={handleUnvote}
+      userOwns={topic?.user_id === user?.id}
     />
   ))}
 </ul>
