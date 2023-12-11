@@ -8,6 +8,7 @@ def seed_users():
     # Example: Seeding 10 users
     for _ in range(10):
         user = User(
+            
             username=fake.user_name(),
             email=fake.email(),
             password=generate_password_hash(fake.password())
