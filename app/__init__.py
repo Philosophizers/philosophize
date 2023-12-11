@@ -46,8 +46,6 @@ app.register_blueprint(comment_routes, url_prefix='/api/comments')
 app.register_blueprint(resource_routes, url_prefix='/api/resources')
 app.register_blueprint(vote_routes, url_prefix='/api/votes')
 db.init_app(app)
-
-seeds.seed()
 Migrate(app, db)
 
 
