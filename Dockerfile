@@ -32,3 +32,6 @@ RUN flask db upgrade
 RUN flask seed all
 
 CMD gunicorn app:app
+
+
+# NODE_OPTIONS=--openssl-legacy-provider npm install --prefix react-app && NODE_OPTIONS=--openssl-legacy-provider npm run build --prefix react-app && pip install -r requirements.txt && pip install psycopg2 && flask db upgrade && flask seed all
