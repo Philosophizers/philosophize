@@ -182,7 +182,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Topic from './Topic';
 import TopicForm from './TopicForm';
-import { fetchTopics, editTopic, createTopic, removeTopic } from '../../store/topics';
+import { fetchTopics, editTopic, createTopic, removeTopic, checkUserVote } from '../../store/topics';
 import { castVote, removeVote } from '../../store/topics';
 
 const TopicList = () => {
@@ -190,6 +190,10 @@ const TopicList = () => {
     const topics = useSelector(state => Object.values(state.topics));
     const [showForm, setShowForm] = useState(false);
     const [editingTopic, setEditingTopic] = useState(null);
+
+    useEffect(() => {
+      dispatch(checkUserVote());
+    }, []);
 
     useEffect(() => {
       dispatch(fetchTopics()).catch(console.error);
