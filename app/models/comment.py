@@ -2,7 +2,7 @@
 
 from .db import db
 from datetime import datetime
-from user import User
+from .user import User
 
 class Comment(db.Model):
     __tablename__ = 'comments'
