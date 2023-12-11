@@ -3,12 +3,13 @@
 from .db import db
 from .vote import Vote
 from datetime import datetime
+from .user import User
 
 class Topic(db.Model):
     __tablename__ = 'topics'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # Owner of the topic
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)  # Owner of the topic
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
