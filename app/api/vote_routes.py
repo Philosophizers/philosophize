@@ -46,3 +46,14 @@ def remove_vote():
     db.session.commit()
 
     return jsonify({"message": "Vote removed"}), 200
+
+@vote_routes.route('/check-vote', methods=['GET'])
+@login_required
+def check_vote():
+    # Check if the user has ever voted for any topic
+    vote_exists = Vote.query.filter(Vote.user_id == current_user.id).first()
+
+    if vote_exists:
+        return jsonify({"has_voted": True}), 200
+    else:
+        return jsonify({"has_voted": False}), 200

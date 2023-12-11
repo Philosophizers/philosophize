@@ -182,14 +182,19 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Topic from './Topic';
 import TopicForm from './TopicForm';
-import { fetchTopics, editTopic, createTopic, removeTopic } from '../../store/topics';
+import { fetchTopics, editTopic, createTopic, removeTopic, checkUserVote } from '../../store/topics';
 import { castVote, removeVote } from '../../store/topics';
 
 const TopicList = () => {
     const dispatch = useDispatch();
     const topics = useSelector(state => Object.values(state.topics));
+    const user = useSelector((state) => state.session.user);
     const [showForm, setShowForm] = useState(false);
     const [editingTopic, setEditingTopic] = useState(null);
+
+    useEffect(() => {
+      dispatch(checkUserVote());
+    }, []);
 
     useEffect(() => {
       dispatch(fetchTopics()).catch(console.error);
@@ -318,6 +323,7 @@ const TopicList = () => {
       onDelete={handleDeleteTopic}
       onVote={handleVote}
       onUnvote={handleUnvote}
+      userOwns={topic?.user_id === user?.id}
     />
   ))}
 </ul>

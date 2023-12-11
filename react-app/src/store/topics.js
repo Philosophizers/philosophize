@@ -10,6 +10,7 @@ const ADD_COMMENT = "topics/ADD_COMMENT";
 const VOTE_FOR_TOPIC = "topics/VOTE_FOR_TOPIC";
 const UNVOTE_FOR_TOPIC = "topics/UNVOTE_FOR_TOPIC";
 const RESET_VOTES = "topics/RESET_VOTES";
+const USER_HAS_VOTED = "topics/USER_HAS_VOTED";
 
 const UPDATE_COMMENT = "topics/UPDATE_COMMENT";
 const DELETE_COMMENT = "topics/DELETE_COMMENT";
@@ -150,6 +151,11 @@ export const deleteComment = (commentId) => ({
   commentId,
 });
 
+export const userHasVotedStatus = (hasVoted) => ({
+  type: USER_HAS_VOTED,
+  hasVoted,
+});
+
 
 // Thunk for fetching comments of the topic of the day
 export const fetchCommentsForTopic = (topicId) => async (dispatch) => {
@@ -193,9 +199,36 @@ export const castVote = (topicId) => async (dispatch) => {
     const updatedTopic = await response.json();
     console.log("Updated Topic:", updatedTopic); // Log to check the updated topic
     dispatch(voteForTopic(updatedTopic));
+    dispatch(checkUserVote());
   } else {
     const data = await response.json();
     alert(data.message);
+  }
+};
+
+export const checkUserVote = () => async (dispatch) => {
+  try {
+    const response = await fetch('/api/votes/check-vote', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const hasVoted = data.has_voted;
+      console.log('Has the user voted?', hasVoted);
+      dispatch(userHasVotedStatus(hasVoted));
+    } else {
+      const errorData = await response.json();
+      // Handle error case, maybe show an alert or log the error
+      console.error('Error:', errorData.message);
+    }
+  } catch (error) {
+    // Handle any network errors or exceptions
+    console.error('Network Error:', error);
   }
 };
 
@@ -212,6 +245,7 @@ export const removeVote = (topicId) => async (dispatch) => {
   if (response.ok) {
     const updatedTopic = await response.json();
     dispatch(unvoteForTopic(updatedTopic));
+    dispatch(checkUserVote());
   } else {
     // Handle errors
     const data = await response.json();
@@ -339,6 +373,11 @@ export default function topicsReducer(state = initialState, action) {
       console.log("Updated State:", updatedState); // Log updated state
       return updatedState;
 
+      case USER_HAS_VOTED:
+        return {
+          ...state,
+          hasVoted: action.hasVoted
+        };
     case UNVOTE_FOR_TOPIC:
       return {
         ...state,
