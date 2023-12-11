@@ -1,0 +1,78 @@
+/* Modal backdrop */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050; /* Ensures it sits on top of other elements */
+  }
+  
+  /* Modal content box */
+  .modal-content {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Width of the modal */
+    padding: 20px;
+  }
+  
+  /* Form within the modal */
+  .modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Spacing between form elements */
+  }
+  
+  /* Input fields styling */
+  .modal-form input[type="text"],
+  .modal-form input[type="password"],
+  .modal-form input[type="email"] {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  /* Button styling */
+  .modal-form button {
+    background-color: #007BFF; /* Example color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .modal-form button:hover {
+    background-color: #0056b3; /* Darker shade for hover state */
+  }
+  
+  /* Additional styles for header and links */
+  .modal-header {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .modal-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+  
+  .modal-link a {
+    color: #007BFF; /* Example color */
+    text-decoration: none;
+  }
+  
+  .modal-link a:hover {
+    text-decoration: underline;
+  }
+  
