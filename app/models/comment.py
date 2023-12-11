@@ -23,6 +23,7 @@ class Comment(db.Model):
             'user_id': self.user_id,
             'topic_id': self.topic_id,
             'content': self.content,
+            'username': self.user.username,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }

@@ -92,7 +92,7 @@ const CommentsPage = () => {
                     onChange={(e) => setEditedContent(e.target.value)}
                   />
                 ) : (
-                  <p>{comment.content}</p>
+                  <p>{comment.username || 'User'} said: {comment.content}</p>
                 )}
                 {currentUserId === comment.user_id && (
                   <>
