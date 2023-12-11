@@ -20,24 +20,7 @@ const LandingPage = () => {
     }, [dispatch, topicOfTheDay]);
 
   return (
-    // <div>
-    //   <h1>Topic of the Day</h1>
-    //   {topicOfTheDay ? (
-    //     <div>
-    //       <h2>{topicOfTheDay.title}</h2>
-    //       <p>{topicOfTheDay.description}</p>
-    //       {/* You can map over the comments here to display them */}
-    //       <div>
-    //         {comments.slice(0, 3).map(comment => (
-    //           <p key={comment.id}>{comment.username || 'User'} said: {comment.content}</p>
-    //         ))}
-    //       </div>
-    //       <a href="/comments">See all comments</a>
-    //     </div>
-    //   ) : (
-    //     <p>Loading topic...</p>
-    //   )}
-    // </div>
+
     <div className="landing-page-container">
   <div className="pillar left-pillar">
     {/* Pillar image here */}
@@ -57,6 +40,7 @@ const LandingPage = () => {
           ))}
         </div>
         <a href="/comments" className="see-all-comments">See all comments</a>
+        <a href="/topics" className="topcs">Propose your own topic</a>
       </>
     ) : (
       <p>Loading topic...</p>

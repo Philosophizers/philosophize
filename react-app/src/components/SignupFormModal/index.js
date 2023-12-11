@@ -13,26 +13,44 @@ function SignupFormModal() {
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 
+	function isEmail(val) {
+		let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		if(!regEmail.test(val)){
+		  return false;
+		} else {
+		  return true
+		}
+	}
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (password === confirmPassword) {
-			const data = await dispatch(signUp(username, email, password));
-			if (data) {
-				setErrors(data);
+		if (isEmail(email)) {
+			if (password === confirmPassword) {
+				const data = await dispatch(signUp(username, email, password));
+				if (data) {
+					setErrors(data);
+				} else {
+					closeModal();
+				}
 			} else {
-				closeModal();
+				setErrors([
+					"Confirm Password field must be the same as the Password field",
+				]);
 			}
 		} else {
 			setErrors([
-				"Confirm Password field must be the same as the Password field",
+				"email is invalid",
 			]);
 		}
 	};
 
 	return (
 		<>
-			<h1>Sign Up</h1>
-			<form onSubmit={handleSubmit}>
+		 <div className="modal-backdrop">
+  <div className="modal-content">
+    <div className="modal-header">Sign Up</div>
+    <form onSubmit={handleSubmit} className="modal-form">
+	<button className="close-modal-button" onClick={closeModal}>&times;</button>
 				<ul>
 					{errors.map((error, idx) => (
 						<li key={idx}>{error}</li>
@@ -76,6 +94,11 @@ function SignupFormModal() {
 				</label>
 				<button type="submit">Sign Up</button>
 			</form>
+			<div className="modal-link">
+      <a href="/login">Already have an account? Log in!</a>
+    </div>
+  </div>
+</div>
 		</>
 	);
 }

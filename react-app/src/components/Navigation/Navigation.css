@@ -1,7 +1,97 @@
-.profile-dropdown {
-  position: absolute;
+/* Navigation.css */
+
+/* Reset the list style and set up flexbox for the navigation */
+.navul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between; /* This will space out the list items */
+  align-items: center;
+  background: #fff; /* Set a background color if needed */
+  height: 60px; /* Adjust to your navbar's desired height */
+  list-style-type: none;
 }
 
+ul li {
+  list-style-type: none;
+  list-style: none;
+}
+
+
+/* Styling for the navigation links */
+.navli {
+  padding: 10px;
+  list-style: none;
+  list-style-type: none;
+}
+
+.homeImage img {
+  width: 30px; /* Adjust to your preference */
+  height: auto;
+}
+
+/* Center the brand text */
+.brand-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 1.5em;
+  letter-spacing: 2px;
+  pointer-events: none; /* This allows clicks to pass through */
+  top: 0; /* Position at the top */
+  left: 0;
+  z-index: 1; /* Lower z-index than clickable elements */
+}
+
+/* Ensure clickable elements can be interacted with */
+.homeImage, .profile-button {
+  z-index: 2; /* Higher z-index for clickable elements */
+}
+
+/* Style for the profile dropdown */
+.profile-dropdown {
+  position: static;
+  top: 60px; /* Adjust this based on the actual height of your navbar */
+  left: 0;
+  background-color: #f9f9f9; /* Light background for the dropdown */
+  border: 1px solid #ccc; /* Optional border */
+  border-radius: 4px; /* Rounded corners for the dropdown */
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); /* Optional shadow for depth */
+  z-index: 1000; /* Ensure the dropdown appears above other content */
+}
+
+/* Hide the dropdown by default */
 .hidden {
   display: none;
+}
+
+/* Profile button that triggers dropdown */
+.profile-button {
+  position: relative; /* Set relative for the dropdown to position against */
+  pointer-events: all; /* Ensure this element can be clicked */
+  text-align: right; /* Align the button to the right */
+  cursor: pointer;
+}
+
+/* Additional styling for buttons and links within the dropdown */
+.profile-dropdown button {
+  background: none;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+}
+
+.profile-dropdown a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+/* Hover effect for dropdown items */
+.profile-dropdown button:hover,
+.profile-dropdown a:hover {
+  background-color: #f2f2f2;
 }

@@ -35,25 +35,29 @@ function LoginFormModal() {
     if (data) {
       setErrors(data);
     } 
-    else {
-      // Clear the form fields after successful login
-      closeModal()
-    }
+    // else {
+    //   // Clear the form fields after successful login
+    //   closeModal()
+    // }
+    closeModal();
   };
 
   return (
     <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="modal-backdrop">
+  <div className="modal-content">
+    <div className="modal-header">Log In</div>
+    <form onSubmit={handleSubmit} className="modal-form">
+    <button className="close-modal-button" onClick={closeModal}>&times;</button>
         <ul>
         {Array.isArray(errors) && errors.map((error, idx) => (
-    <li key={idx}>{error}</li>
+          <li key={idx}>{error}</li>
           ))}
         </ul>
         <label>
           Email
           <input
-            type="text"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -71,6 +75,11 @@ function LoginFormModal() {
         <button type="submit">Log In</button>
         <button onClick={handleDemoLogin}>Log in as Demo Member</button>
       </form>
+      <div className="modal-link">
+      <a href="/signup">Don't have an account? Sign Up!</a>
+    </div>
+  </div>
+</div>
     </>
   );
 }
