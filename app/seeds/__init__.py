@@ -40,7 +40,7 @@ from app.models import db
 seed_commands = AppGroup("seed")
 
 @seed_commands.command("all")
-def seed_db():
+def seeds():
     if environment == 'production':
         undo()
     seed_users()
