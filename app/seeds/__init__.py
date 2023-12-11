@@ -58,7 +58,7 @@ def seed():
     print("SEEDED COMPLETE")
 
 @seed_commands.command("undo")
-def undo_seeds():
+def undo():
     undo_users()
     undo_topics()
     undo_comments()

@@ -11,7 +11,6 @@ from .api.auth_routes import auth_routes
 from .seeds import seed_commands
 from .config import Config
 from sqlalchemy.exc import SQLAlchemyError
-from flask_sqlalchemy import SQLAlchemy
 
 from .api.topic_routes import topic_routes
 from .api.comment_routes import comment_routes
@@ -46,8 +45,7 @@ app.register_blueprint(topic_routes, url_prefix='/api/topics')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
 app.register_blueprint(resource_routes, url_prefix='/api/resources')
 app.register_blueprint(vote_routes, url_prefix='/api/votes')
-# db.init_app(app)
-db = SQLAlchemy(app)
+db.init_app(app)
 Migrate(app, db)
 
 
