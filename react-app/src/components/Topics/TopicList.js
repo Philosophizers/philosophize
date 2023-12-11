@@ -254,9 +254,9 @@ const TopicList = () => {
     };
 
     const handleVote = (topicId) => {
-      console.log("hahaha")
+
       dispatch(castVote(topicId));
-      console.log("hahaha111")
+
     };
   
     const handleUnvote = (topicId) => {
@@ -272,28 +272,6 @@ const TopicList = () => {
       console.error('Expected topics to be an array but got:', topics);
       return <p>Error: Topics data is not an array.</p>;
     }
-    
-
-    topics.map(topic => {
-      if (!topic) {
-        console.error('Null or undefined topic found', topic);
-        return null; // or some placeholder component
-      }
-      const hasVoted = topic.hasVoted ?? false;
-      return (
-        <Topic
-        key={topic.id}
-        topic={topic}
-        onEdit={handleEditClick}
-        onDelete={handleDeleteTopic}
-        onVote={() => handleVote(topic.id)}
-        onUnvote={() => handleUnvote(topic.id)}
-        hasVoted={hasVoted}
-        />
-      );
-    })
-    
-
     
 
     return (

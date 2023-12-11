@@ -10,7 +10,14 @@ topic_routes = Blueprint('topics', __name__)
 @topic_routes.route('/')
 def get_topics():
     topics = Topic.query.all()
-    return jsonify([topic.to_dict() for topic in topics])
+    
+
+    topics_with_votes = []
+    for topic in topics: 
+        related_votes = {'votes': [vote.to_dict() for vote in topic.votes]}
+        topic_with_votes = {**topic.to_dict(), **related_votes}
+        topics_with_votes.append(topic_with_votes)
+    return jsonify(topics_with_votes)
 
 
 @topic_routes.route('/banana', methods=['POST'])
@@ -44,16 +51,6 @@ def delete_topic(id):
         db.session.commit()
         return jsonify({'message': 'Topic deleted'}), 204
     return jsonify({'message': 'Permission denied'}), 403
-
-@topic_routes.route('/<int:id>/vote', methods=['POST'])
-@login_required
-def vote_topic(id):
-    topic = Topic.query.get(id)
-    if topic:
-        # topic.votes += 1  # Increment the vote count
-        db.session.commit()
-        return jsonify(topic.to_dict())
-    return jsonify({'message': 'Topic not found'}), 404
 
 
 @topic_routes.route('/topic-of-the-day', methods=['GET'])
@@ -93,7 +90,9 @@ def vote(topic_id):
         db.session.add(new_vote)
         db.session.commit()
         updated_topic = Topic.query.get(topic_id)
-        return jsonify(updated_topic.to_dict()), 200
+        related_votes = {'votes': [vote.to_dict() for vote in updated_topic.votes]}
+        updated_topic = {**updated_topic.to_dict(), **related_votes}
+        return jsonify(updated_topic), 200
     except Exception as e:
         db.session.rollback()
         return jsonify({"message": str(e)}), 500
@@ -110,4 +109,7 @@ def unvote(topic_id):
 
     db.session.delete(vote)
     db.session.commit()
-    return jsonify({"message": "Unvote successful"}), 200
+    updated_topic = Topic.query.get(topic_id)
+    related_votes = {'votes': [vote.to_dict() for vote in updated_topic.votes]}
+    updated_topic = {**updated_topic.to_dict(), **related_votes}
+    return jsonify(updated_topic), 200

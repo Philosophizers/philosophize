@@ -77,10 +77,11 @@ const LandingPage = () => {
           <p>{topicOfTheDay.description}</p>
           {/* You can map over the comments here to display them */}
           <div>
-            {comments.map(comment => (
+            {comments.slice(0, 2).map(comment => (
               <p key={comment.id}>{comment.content}</p>
             ))}
           </div>
+          <a href="/comments">See all comments</a>
         </div>
       ) : (
         <p>Loading topic...</p>
