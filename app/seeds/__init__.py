@@ -1,7 +1,5 @@
-from flask.cli import AppGroup
-from .users import seed_users, undo_users
 
-from app.models.db import db, environment, SCHEMA
+
 
 # # Creates a seed group to hold our commands
 # # So we can type `flask seed --help`
@@ -35,26 +33,35 @@ from .comments import seed_comments, undo_comments
 from .resources import seed_resources, undo_resources
 from .votes import seed_votes, undo_votes
 
-from app.models import db
+from app.models import db, environment, SCHEMA
 
 seed_commands = AppGroup("seed")
 
 @seed_commands.command("all")
-def seeds():
+def seed():
     if environment == 'production':
-        undo()
+        # Before seeding in production, you might want to run the seed undo
+        # command, which will truncate all tables prefixed with
+        # the schema name (similar to the comment in the new example).
+        # Make sure to add all your other model's undo functions below
+        undo_users()
+        undo_topics()
+        undo_comments()
+        undo_resources()
+        undo_votes()
+
     seed_users()
     seed_topics()
     seed_comments()
     seed_resources()
     seed_votes()
-    print("All data seeded")
+    print("SEEDED COMPLETE")
 
 @seed_commands.command("undo")
-def undo():
+def undo_seeds():
     undo_users()
     undo_topics()
     undo_comments()
     undo_resources()
     undo_votes()
-    print("All data cleared")
+    print("UNSEEDED")
