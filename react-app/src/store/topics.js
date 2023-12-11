@@ -11,6 +11,10 @@ const VOTE_FOR_TOPIC = "topics/VOTE_FOR_TOPIC";
 const UNVOTE_FOR_TOPIC = "topics/UNVOTE_FOR_TOPIC";
 const RESET_VOTES = "topics/RESET_VOTES";
 
+const UPDATE_COMMENT = "topics/UPDATE_COMMENT";
+const DELETE_COMMENT = "topics/DELETE_COMMENT";
+
+
 // Action Creators
 const getTopics = (topics) => ({
   type: GET_TOPICS,
@@ -133,6 +137,20 @@ export const fetchTopicOfTheDay = () => async (dispatch) => {
   }
 };
 
+
+//comments
+
+export const updateComment = (comment) => ({
+  type: UPDATE_COMMENT,
+  comment,
+});
+
+export const deleteComment = (commentId) => ({
+  type: DELETE_COMMENT,
+  commentId,
+});
+
+
 // Thunk for fetching comments of the topic of the day
 export const fetchCommentsForTopic = (topicId) => async (dispatch) => {
   console.log('fetchCommentsForTopic', topicId)
@@ -200,6 +218,37 @@ export const removeVote = (topicId) => async (dispatch) => {
     alert(data.message); // Or handle the error message in a more user-friendly way
   }
 };
+
+export const editComment = (commentId, commentData) => async (dispatch) => {
+  const response = await fetch(`/api/comments/${commentId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(commentData),
+  });
+
+  if (response.ok) {
+    const updatedComment = await response.json();
+    dispatch(updateComment(updatedComment));
+    return updatedComment;
+  } else {
+    const errors = await response.json();
+    return errors;
+  }
+};
+
+export const removeComment = (commentId) => async (dispatch) => {
+  const response = await fetch(`/api/comments/${commentId}`, {
+    method: "DELETE",
+  });
+
+  if (response.ok) {
+    dispatch(deleteComment(commentId));
+  } else {
+    const errors = await response.json();
+    return errors;
+  }
+};
+
 
 // Adjust the initial state
 const initialState = {
@@ -298,6 +347,21 @@ export default function topicsReducer(state = initialState, action) {
           ...action.topic,
           
         },
+      };
+      case UPDATE_COMMENT:
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          [action.comment.id]: action.comment,
+        },
+      };
+    case DELETE_COMMENT:
+      const newComments = { ...state.comments };
+      delete newComments[action.commentId];
+      return {
+        ...state,
+        comments: newComments,
       };
     default:
       return state;
