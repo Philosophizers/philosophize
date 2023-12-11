@@ -1,11 +1,12 @@
 from .db import db
 from datetime import datetime
+from .user import User
 
 class Vote(db.Model):
     __tablename__ = 'votes'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'), nullable=False)
     date_voted = db.Column(db.Date, nullable=False, default=datetime.utcnow)
 
