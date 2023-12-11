@@ -1,32 +1,30 @@
 // src/store/topics.js
 
-
-const GET_TOPICS = 'topics/GET_TOPICS';
-const CREATE_TOPIC = 'topics/CREATE_TOPIC';
-const REMOVE_TOPIC = 'topics/REMOVE_TOPIC';
-const UPDATE_TOPIC = 'topics/UPDATE_TOPIC';
-const SET_TOPIC_OF_THE_DAY = 'topics/SET_TOPIC_OF_THE_DAY';
-const GET_COMMENTS = 'topics/GET_COMMENTS';
-const ADD_COMMENT = 'topics/ADD_COMMENT';
-const VOTE_FOR_TOPIC = 'topics/VOTE_FOR_TOPIC';
-const UNVOTE_FOR_TOPIC = 'topics/UNVOTE_FOR_TOPIC';
-const RESET_VOTES = 'topics/RESET_VOTES';
-
+const GET_TOPICS = "topics/GET_TOPICS";
+const CREATE_TOPIC = "topics/CREATE_TOPIC";
+const REMOVE_TOPIC = "topics/REMOVE_TOPIC";
+const UPDATE_TOPIC = "topics/UPDATE_TOPIC";
+const SET_TOPIC_OF_THE_DAY = "topics/SET_TOPIC_OF_THE_DAY";
+const GET_COMMENTS = "topics/GET_COMMENTS";
+const ADD_COMMENT = "topics/ADD_COMMENT";
+const VOTE_FOR_TOPIC = "topics/VOTE_FOR_TOPIC";
+const UNVOTE_FOR_TOPIC = "topics/UNVOTE_FOR_TOPIC";
+const RESET_VOTES = "topics/RESET_VOTES";
 
 // Action Creators
 const getTopics = (topics) => ({
-    type: GET_TOPICS,
-    topics
+  type: GET_TOPICS,
+  topics,
 });
 
 export const addTopic = (topic) => ({
-    type: CREATE_TOPIC,
-    topic
+  type: CREATE_TOPIC,
+  topic,
 });
 
 // Thunk Action Creators
 export const fetchTopics = () => async (dispatch) => {
-  const response = await fetch('/api/topics');
+  const response = await fetch("/api/topics");
   if (response.ok) {
     const topics = await response.json();
     dispatch(getTopics(topics));
@@ -35,70 +33,81 @@ export const fetchTopics = () => async (dispatch) => {
 
 export const updateTopic = (topic) => ({
   type: UPDATE_TOPIC,
-  topic
+  topic,
 });
 
 export const editTopic = (topicId, topicData) => async (dispatch) => {
   const response = await fetch(`/api/topics/${topicId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(topicData),
-      credentials: 'include',
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(topicData),
+    credentials: "include",
   });
 
   if (response.ok) {
-      const updatedTopic = await response.json();
-      dispatch(updateTopic(updatedTopic));
-      return updatedTopic;
+    const updatedTopic = await response.json();
+    dispatch(updateTopic(updatedTopic));
+    return updatedTopic;
   } else {
-      const errors = await response.json();
-      return errors;
+    const errors = await response.json();
+    return errors;
   }
 };
 
-
-
 export const removeTopic = (topicId) => ({
   type: REMOVE_TOPIC,
-  topicId
+  topicId,
 });
 
-
 export const createTopic = (topicData) => async (dispatch) => {
-    const response = await fetch('/api/topics/banana', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(topicData)
-        // body: formInfo
-    });
+  const response = await fetch("/api/topics/banana", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(topicData),
+    // body: formInfo
+  });
 
-    if (response.ok) {
-        const newTopic = await response.json();
-        dispatch(addTopic(newTopic));
-        return newTopic;
-    } else {
-        const errors = await response.json();
-        return errors;
-    }
+  if (response.ok) {
+    const newTopic = await response.json();
+    dispatch(addTopic(newTopic));
+    return newTopic;
+  } else {
+    const errors = await response.json();
+    return errors;
+  }
+};
+
+export const createComment = (topicId, commentData) => async (dispatch) => {
+  const response = await fetch(`/api/comments/${topicId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(commentData),
+    // body: formInfo
+  });
+
+  if (response.ok) {
+    console.log('comment created', response)
+  } else {
+    const errors = await response.json();
+    return errors;
+  }
 };
 
 // Add new action creators
 export const setTopicOfTheDay = (topic) => ({
   type: SET_TOPIC_OF_THE_DAY,
-  topic
+  topic,
 });
 
 export const getComments = (comments) => ({
   type: GET_COMMENTS,
-  comments
+  comments,
 });
 
 export const addComment = (comment) => ({
   type: ADD_COMMENT,
-  comment
+  comment,
 });
-
-
 
 // export const voteForTopic = (topicId) => ({
 //   type: VOTE_FOR_TOPIC,
@@ -110,27 +119,27 @@ export const voteForTopic = (updatedTopic) => ({
   topic: updatedTopic,
 });
 
-export const unvoteForTopic = (topicId) => ({
+export const unvoteForTopic = (updatedTopic) => ({
   type: UNVOTE_FOR_TOPIC,
-  topicId,
+  topic: updatedTopic,
 });
-
 
 // Thunk for fetching the topic of the day
 export const fetchTopicOfTheDay = () => async (dispatch) => {
-  const response = await fetch('/api/topics/topic-of-the-day');
+  const response = await fetch("/api/topics/topic-of-the-day");
   if (response.ok) {
-      const topic = await response.json();
-      dispatch(setTopicOfTheDay(topic));
+    const topic = await response.json();
+    dispatch(setTopicOfTheDay(topic));
   }
 };
 
 // Thunk for fetching comments of the topic of the day
 export const fetchCommentsForTopic = (topicId) => async (dispatch) => {
+  console.log('fetchCommentsForTopic', topicId)
   const response = await fetch(`/api/comments/${topicId}`);
   if (response.ok) {
-      const comments = await response.json();
-      dispatch(getComments(comments));
+    const comments = await response.json();
+    dispatch(getComments(comments));
   }
 };
 
@@ -155,11 +164,11 @@ export const fetchCommentsForTopic = (topicId) => async (dispatch) => {
 
 export const castVote = (topicId) => async (dispatch) => {
   const response = await fetch(`/api/topics/${topicId}/vote`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    credentials: 'include',
+    credentials: "include",
   });
 
   if (response.ok) {
@@ -172,20 +181,19 @@ export const castVote = (topicId) => async (dispatch) => {
   }
 };
 
-
-
 export const removeVote = (topicId) => async (dispatch) => {
   const response = await fetch(`/api/topics/${topicId}/unvote`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
     // Make sure to include credentials if your API requires authentication
-    credentials: 'include',
+    credentials: "include",
   });
 
   if (response.ok) {
-    dispatch(unvoteForTopic(topicId));
+    const updatedTopic = await response.json();
+    dispatch(unvoteForTopic(updatedTopic));
   } else {
     // Handle errors
     const data = await response.json();
@@ -217,79 +225,81 @@ const initialState = {
 //   }
 // }
 
-
 export default function topicsReducer(state = initialState, action) {
   switch (action.type) {
-      case GET_TOPICS:
-          return { ...state, ...Object.fromEntries(action.topics.map(topic => [topic.id, topic])) };
-      case CREATE_TOPIC:
-          return { ...state, [action.topic.id]: action.topic };
-      case UPDATE_TOPIC:
-            return {
-                ...state,
-                [action.topic.id]: action.topic
-            };
-      case REMOVE_TOPIC:
-          const newState = { ...state };
-          delete newState[action.topicId];
-          return newState;
-      case SET_TOPIC_OF_THE_DAY:
-            return { ...state, topicOfTheDay: action.topic };
-      case GET_COMMENTS:
-            return { ...state, comments: { ...action.comments } };
-      case ADD_COMMENT:
-            // Logic to add a new comment to the state
-            return { ...state, comments: { ...state.comments, [action.comment.id]: action.comment } };
-  //     case VOTE_FOR_TOPIC:
-  //   return {
-  //     ...state,
-  //     topics: {
-  //       ...state.topics,
-  //       [action.topicId]: {
-  //         ...state.topics[action.topicId],
-  //         hasVoted: true
-  //       }
-  //     }
-  //   };
-  // case UNVOTE_FOR_TOPIC:
-  //   return {
-  //     ...state,
-  //     topics: {
-  //       ...state.topics,
-  //       [action.topicId]: {
-  //         ...state.topics[action.topicId],
-  //         hasVoted: false
-  //       }
-  //     }
-  //   };
-  case VOTE_FOR_TOPIC:
-    console.log("Current State:", state); // Log current state
-    const updatedState = {
-      ...state,
-      topics: {
-        ...state.topics,
-        [action.topic.id]: {
-          ...state.topics[action.topic.id],
-          ...action.topic
-        }
-      }
-    };
-    console.log("Updated State:", updatedState); // Log updated state
-    return updatedState;
+    case GET_TOPICS:
+      return {
+        ...state,
+        ...Object.fromEntries(action.topics.map((topic) => [topic.id, topic])),
+      };
+    case CREATE_TOPIC:
+      return { ...state, [action.topic.id]: action.topic };
+    case UPDATE_TOPIC:
+      return {
+        ...state,
+        [action.topic.id]: action.topic,
+      };
+    case REMOVE_TOPIC:
+      const newState = { ...state };
+      delete newState[action.topicId];
+      return newState;
+    case SET_TOPIC_OF_THE_DAY:
+      return { ...state, topicOfTheDay: action.topic };
+    case GET_COMMENTS:
+      return { ...state, comments: { ...action.comments } };
+    case ADD_COMMENT:
+      // Logic to add a new comment to the state
+      return {
+        ...state,
+        comments: { ...state.comments, [action.comment.id]: action.comment },
+      };
+    //     case VOTE_FOR_TOPIC:
+    //   return {
+    //     ...state,
+    //     topics: {
+    //       ...state.topics,
+    //       [action.topicId]: {
+    //         ...state.topics[action.topicId],
+    //         hasVoted: true
+    //       }
+    //     }
+    //   };
+    // case UNVOTE_FOR_TOPIC:
+    //   return {
+    //     ...state,
+    //     topics: {
+    //       ...state.topics,
+    //       [action.topicId]: {
+    //         ...state.topics[action.topicId],
+    //         hasVoted: false
+    //       }
+    //     }
+    //   };
+    case VOTE_FOR_TOPIC:
+      console.log("Action:", action);
+      console.log("Current State:", state); // Log current state
+      const newTopic = {
+        ...state[action.topic.id],
+        ...action.topic,
+      };
+      console.log("ne topic", newTopic);
+      const updatedState = {
+        ...state,
+        [action.topic.id]: newTopic,
+      };
+      console.log("Updated State:", updatedState); // Log updated state
+      return updatedState;
 
-  case UNVOTE_FOR_TOPIC:
-    return {
-      ...state,
-      topics: {
-        ...state.topics,
-        [action.topicId]: {
-          ...state.topics[action.topicId],
-          hasVoted: false,
-          vote_count: state.topics[action.topicId].vote_count - 1 // Decrement vote count
-        }
-      }
-    };
-      default:
-          return state;
+    case UNVOTE_FOR_TOPIC:
+      return {
+        ...state,
+        [action.topic.id]: {
+          ...state[action.topic.id],
+          ...action.topic,
+          
+        },
+      };
+    default:
+      return state;
   }
 }
