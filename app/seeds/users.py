@@ -5,6 +5,12 @@ from faker import Faker
 fake = Faker()
 
 def seed_users():
+    demo_user = User(
+        username='plato',
+        email='plato@socrates.com',
+        password='demopassword'  # Use a secure method to generate and store passwords
+    )
+    db.session.add(demo_user)
     # Example: Seeding 10 users
     for _ in range(10):
         user = User(

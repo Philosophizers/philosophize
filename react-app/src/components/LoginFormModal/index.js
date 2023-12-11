@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { login } from "../../store/session";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import { useHistory,Link } from 'react-router-dom';
 import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+  const history = useHistory();
+
+  if (sessionUser) return <Redirect to="/" />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,13 +27,27 @@ function LoginFormModal() {
     }
   };
 
+  const handleDemoLogin = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    setEmail('plato@socrates.com'); // Set demo credentials
+    setPassword('demopassword');
+    const data = dispatch(login('plato@socrates.com', 'demopassword'));
+    if (data) {
+      setErrors(data);
+    } 
+    else {
+      // Clear the form fields after successful login
+      closeModal()
+    }
+  };
+
   return (
     <>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
+        {Array.isArray(errors) && errors.map((error, idx) => (
+    <li key={idx}>{error}</li>
           ))}
         </ul>
         <label>
@@ -49,6 +69,7 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit">Log In</button>
+        <button onClick={handleDemoLogin}>Log in as Demo Member</button>
       </form>
     </>
   );

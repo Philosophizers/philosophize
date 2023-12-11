@@ -1,0 +1,80 @@
+.landing-page-container {
+    display: flex;
+    justify-content: space-between; /* Space between the main elements */
+    align-items: flex-start; /* Align items to the top */
+    height: calc(100vh - 60px); /* Adjusted for a navbar height */
+    margin-top: 60px; /* Space for the navbar */
+    position: relative; /* Needed for absolute positioning of pillars */
+    overflow-x: hidden; /* Prevents horizontal scroll if pillars are wide */
+  }
+  
+  .pillar {
+    position: absolute; /* Absolute positioning */
+    bottom: 0; /* Align to the bottom of the container */
+    top: 60px; /* Align to the bottom of the navbar */
+  }
+  
+  .left-pillar {
+    left: 0;
+  }
+  
+  .right-pillar {
+    right: 0;
+  }
+  
+  .left-pillar img, .right-pillar img {
+    height: 100%;
+    object-fit: cover; /* This will cover the area without stretching the image */
+  }
+  
+  .topic-of-the-day-container {
+    width: 60%; /* Or whatever width works for your layout */
+    text-align: center;
+    margin: 0 auto; /* Center the container */
+    z-index: 1; /* Make sure this layer is above the absolute positioned pillars */
+  }
+  
+  .comments-preview {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; /* Wrap comments to next line if needed */
+    justify-content: center; /* Center comments in the container */
+    align-items: flex-start;
+    gap: 15px; /* Space between comment cards */
+  }
+  
+  .comment {
+    background-color: #fce4ec;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: calc(33.333% - 20px); /* Three comments per row, minus gap */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds depth */
+  }
+  
+  .comment-username {
+    font-weight: bold;
+  }
+  
+  .see-all-comments {
+    display: block;
+    margin-top: 20px;
+    color: #8b0000;
+    text-decoration: none;
+    align-self: center; /* Center the link */
+  }
+  
+  /* Optional: Responsive adjustments */
+  @media (max-width: 768px) {
+    .pillar {
+      display: none; /* Hide pillars on smaller screens */
+    }
+  
+    .topic-of-the-day-container {
+      width: 100%; /* Full width on smaller screens */
+    }
+  
+    .comment {
+      max-width: 100%; /* Full width for comments on smaller screens */
+    }
+  }
+  
