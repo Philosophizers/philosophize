@@ -39,8 +39,8 @@ const LandingPage = () => {
             </div>
           ))}
         </div>
-        <a href="/comments" className="see-all-comments">See all comments</a>
-        <a href="/topics" className="topcs">Propose your own topic</a>
+        <a href="/comments" className="see-all-comments">See All Comments</a>
+        <a href="/topics" className="topcs">Propose Your Own Topic</a>
       </>
     ) : (
       <p>Loading topic...</p>

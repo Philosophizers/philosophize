@@ -10,9 +10,9 @@
   
   .pillar {
     position: absolute; /* Absolute positioning */
-    bottom: 0; /* Align to the bottom of the container */
-    top: 60px; /* Align to the bottom of the navbar */
-    gap: 100px;
+    bottom: 0; 
+    top: 60px; 
+    z-index: -1;
   }
   
   .left-pillar {
@@ -25,30 +25,30 @@
   
   .left-pillar img, .right-pillar img {
     height: 100%;
-    object-fit: cover; /* This will cover the area without stretching the image */
+    object-fit: cover; 
   }
   
   .topic-of-the-day-container {
-    width: 60%; /* Or whatever width works for your layout */
+    width: 60%; 
     text-align: center;
-    margin: 0 auto; /* Center the container */
+    margin: 0 auto;
   }
   
   .comments-preview {
     display: flex;
     flex-direction:column;
-    flex-wrap: wrap; /* Wrap comments to next line if needed */
-    justify-content: center; /* Center comments in the container */
+    flex-wrap: wrap; 
+    justify-content: center; 
     align-items: center;
-    gap: 15px; /* Space between comment cards */
+    gap: 15px; 
   }
   
   .comment {
     background-color: #fce4ec;
     padding: 30px;
     border-radius: 5px;
-    max-width: calc(33.333% - 20px); /* Three comments per row, minus gap */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds depth */
+    max-width: calc(33.333% - 20px); 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
   }
   
   .comment-username {
@@ -60,22 +60,26 @@
     margin-top: 20px;
     color: #8b0000;
     text-decoration: none;
-    align-self: center; /* Center the link */
-    z-index: true; /* Ensures it sits on top of other elements */
+    align-self: center; 
+    z-index: true; 
+  }
+
+  .topcs {
+    text-decoration: none;
   }
   
-  /* Optional: Responsive adjustments */
+  
   @media (max-width: 768px) {
     .pillar {
-      display: none; /* Hide pillars on smaller screens */
+      display: none; 
     }
   
     .topic-of-the-day-container {
-      width: 100%; /* Full width on smaller screens */
+      width: 100%;
     }
   
     .comment {
-      max-width: 100%; /* Full width for comments on smaller screens */
+      max-width: 100%; 
     }
   }
   

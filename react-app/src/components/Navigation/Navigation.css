@@ -51,7 +51,7 @@ ul li {
 
 /* Style for the profile dropdown */
 .profile-dropdown {
-  position: static;
+  position: absolute;
   top: 60px; /* Adjust this based on the actual height of your navbar */
   left: 0;
   background-color: #f9f9f9; /* Light background for the dropdown */
@@ -59,6 +59,7 @@ ul li {
   border-radius: 4px; /* Rounded corners for the dropdown */
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); /* Optional shadow for depth */
   z-index: 1000; /* Ensure the dropdown appears above other content */
+  width: 10px;
 }
 
 /* Hide the dropdown by default */
@@ -78,9 +79,14 @@ ul li {
 .profile-dropdown button {
   background: none;
   border: none;
-  padding: 10px;
-  width: 100%;
-  text-align: left;
+  padding: 20px;
+  text-align: center;
+}
+
+ul.profile-dropdown{
+  width: 80px;
+  position: fixed;
+
 }
 
 .profile-dropdown a {
