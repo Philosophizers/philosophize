@@ -48,6 +48,16 @@ const TopicList = () => {
     }
   };
 
+  const handleCreateButtonClick = () => {
+    if (!user) {
+      alert("You must be logged in to propose a topic");
+      return;
+    }
+    setShowForm(true);
+    setEditingTopic(null);
+  };
+  
+
   //need to push newest topic to top of list
 
   const handleEditTopic = async (topicData) => {
@@ -97,8 +107,13 @@ const TopicList = () => {
   };
 
   const handleVote = (topicId) => {
+    if (!user) {
+      alert("You must be logged in to vote");
+      return;
+    }
     dispatch(castVote(topicId));
   };
+  
 
   const handleUnvote = (topicId) => {
     dispatch(removeVote(topicId));
@@ -166,14 +181,17 @@ const TopicList = () => {
       <div>
         <div>
           <h1>Topics</h1>
-          <button
+          {/* <button
             onClick={() => {
               setShowForm(true);
               setEditingTopic(null); // Reset editing topic
             }}
           >
             Create New Topic
-          </button>
+          </button> */}
+          <button onClick={handleCreateButtonClick}>
+  Create New Topic
+</button>
         </div>
         <div>
           {showForm && (
@@ -190,7 +208,7 @@ const TopicList = () => {
   
         <div>
           <ul>
-            {sortedTopics.length > 0 && sortedTopics.map((topic) => (
+            {sortedTopics.length > 0 && sortedTopics.map((topic) => ( //console.log the topic here
               <Topic
                 key={topic ? topic.id : undefined}
                 topic={topic}
