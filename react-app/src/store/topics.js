@@ -36,6 +36,17 @@ export const fetchTopics = () => async (dispatch) => {
   }
 };
 
+// export const fetchTopics = () => async (dispatch) => {
+//   const response = await fetch("/api/topics");
+//   if (response.ok) {
+//     let topics = await response.json();
+//     // Assuming each topic has a 'created_at' field
+//     topics = topics.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+//     dispatch(getTopics(topics));
+//   }
+// };
+
+
 export const updateTopic = (topic) => ({
   type: UPDATE_TOPIC,
   topic,
@@ -315,8 +326,16 @@ export default function topicsReducer(state = initialState, action) {
         ...state,
         ...Object.fromEntries(action.topics.map((topic) => [topic.id, topic])),
       };
+    // case CREATE_TOPIC:
+    //   return { ...state, [action.topic.id]: action.topic };
     case CREATE_TOPIC:
-      return { ...state, [action.topic.id]: action.topic };
+      return {
+        ...state,
+        topics: {
+          [action.topic.id]: action.topic,
+          ...state.topics,
+        },
+      };
     case UPDATE_TOPIC:
       return {
         ...state,

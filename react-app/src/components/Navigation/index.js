@@ -26,8 +26,8 @@ function Navigation({ isLoaded }){
 
 return (
 	<header>
-    <ul classname='navul'>
-        <li classname='navli'>
+    <ul className='navul'>
+        <li className='navli'>
             <NavLink exact to="/" className="homeImage">
                 <img src={thinkerImage} alt="Thinker" />
             </NavLink>
