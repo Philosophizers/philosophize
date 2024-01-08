@@ -15,9 +15,16 @@ import "./topic.css";
 const TopicList = () => {
   const dispatch = useDispatch();
   const topics = useSelector((state) => Object.values(state.topics));
+  // let topics = useSelector((state) => state.topics);
+  // topics = Object.values(topics);
   const user = useSelector((state) => state.session.user);
   const [showForm, setShowForm] = useState(false);
-  const [editingTopic, setEditingTopic] = useState(null);
+  const [editingTopic, setEditingTopic] = useState(null); // maybe change out of null
+
+  const topicsObject = useSelector((state) => state.topics);
+  const topicsArray = topicsObject && Object.values(topicsObject);
+
+  const sortedTopics = topicsArray.sort((a, b) => new Date(b?.created_at) - new Date(a?.created_at));
 
   useEffect(() => {
     dispatch(checkUserVote());
@@ -41,6 +48,8 @@ const TopicList = () => {
     }
   };
 
+  //need to push newest topic to top of list
+
   const handleEditTopic = async (topicData) => {
     try {
       const res = await dispatch(editTopic(editingTopic.id, topicData));
@@ -55,6 +64,8 @@ const TopicList = () => {
       console.error("Error updating topic:", error);
     }
   };
+
+  // you can do this without having to dispathc fetchTopics again
 
   // const handleDeleteTopic = async (topicId) => {
   //     try {
@@ -102,6 +113,54 @@ const TopicList = () => {
     return <p>Error: Topics data is not an array.</p>;
   }
 
+  // return (
+  //   <>
+  //     <div>
+  //       <div>
+  //         <h1>Topics</h1>
+  //         <button
+  //           onClick={() => {
+  //             setShowForm(true);
+  //             setEditingTopic(null); // Reset editing topic
+  //           }}
+  //         >
+  //           Create New Topic
+  //         </button>
+  //       </div>
+  //       <div>
+  //         {showForm && (
+  //           <TopicForm
+  //             existingTopic={editingTopic}
+  //             onSubmit={editingTopic ? handleEditTopic : handleCreateTopic}
+  //             onCancel={() => {
+  //               setShowForm(false);
+  //               setEditingTopic(null);
+  //             }}
+  //           />
+  //         )}
+  //       </div>
+
+  //       <div>
+  //         <ul>
+  //           {topics &&
+  //             topics.length > 0 &&
+  //             topics.map((topic) => (
+  //               <Topic
+  //                 key={topic ? topic.id : undefined}
+  //                 topic={topic}
+  //                 onEdit={handleEditClick}
+  //                 onDelete={handleDeleteTopic}
+  //                 onVote={handleVote}
+  //                 onUnvote={handleUnvote}
+  //                 userOwns={topic?.user_id === user?.id}
+  //               />
+  //             ))}
+  //         </ul>
+  //       </div>
+  //     </div>
+  //   </>
+  // );
+
   return (
     <>
       <div>
@@ -128,27 +187,26 @@ const TopicList = () => {
             />
           )}
         </div>
-
+  
         <div>
           <ul>
-            {topics &&
-              topics.length > 0 &&
-              topics.map((topic) => (
-                <Topic
-                  key={topic ? topic.id : undefined}
-                  topic={topic}
-                  onEdit={handleEditClick}
-                  onDelete={handleDeleteTopic}
-                  onVote={handleVote}
-                  onUnvote={handleUnvote}
-                  userOwns={topic?.user_id === user?.id}
-                />
-              ))}
+            {sortedTopics.length > 0 && sortedTopics.map((topic) => (
+              <Topic
+                key={topic ? topic.id : undefined}
+                topic={topic}
+                onEdit={handleEditClick}
+                onDelete={handleDeleteTopic}
+                onVote={handleVote}
+                onUnvote={handleUnvote}
+                userOwns={topic?.user_id === user?.id}
+              />
+            ))}
           </ul>
         </div>
       </div>
     </>
   );
+  
 };
 
 export default TopicList;

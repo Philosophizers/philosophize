@@ -16,7 +16,6 @@ const TopicForm = ({ existingTopic, onSubmit, onCancel }) => {
         e.preventDefault();
         let newErrors = [];
 
-        // Validation logic here if needed
 
         if (newErrors.length > 0) {
             setErrors(newErrors);
