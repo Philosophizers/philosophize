@@ -18,6 +18,7 @@ function Topic({ topic, onEdit, onDelete, onVote, onUnvote, userOwns }) {
   const voteCount = topic?.vote_count || 0;
   // console.log(`Rendering topic ${topic.id} with vote count:`, voteCount);
   const voted = topic?.votes?.some((vote) => vote?.user_id === user?.id);
+  
 
   return (
     <div className="topic">
