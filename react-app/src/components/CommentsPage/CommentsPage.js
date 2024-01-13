@@ -19,6 +19,8 @@ const CommentsPage = () => {
   const user = useSelector((state) => state.session.user);
   const currentUserId = user?.id;
 
+  const [contentError, setContentError] = useState("");
+
   useEffect(() => {
     dispatch(fetchTopicOfTheDay());
   }, [dispatch]);
@@ -29,12 +31,40 @@ const CommentsPage = () => {
     }
   }, [dispatch, topicOfTheDay]);
 
+  useEffect(() => {
+    if (content.length >= 50 && content.length <= 1000) {
+      setContentError("");
+    } else if (content.length > 1000) {
+      setContentError("Max limit of 1000 characters reached");
+    } else if (content.length > 0) {
+      setContentError("Content must be at least 50 characters");
+    }
+  }, [content]);
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   let newErrors = [];
+
+  //   if (newErrors.length > 0) {
+  //     setErrors(newErrors);
+  //     return;
+  //   }
+
+  //   const commentData = { content };
+  //   try {
+  //     const res = await dispatch(createComment(topicOfTheDay.id, commentData));
+  //     console.log("res", res);
+
+  //     dispatch(fetchCommentsForTopic(topicOfTheDay.id));
+  //   } catch (error) {
+  //     console.error("Error creating topic:", error);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let newErrors = [];
-
-    if (newErrors.length > 0) {
-      setErrors(newErrors);
+    if (contentError || content.length === 0) {
+      // Handle the case when there are errors or the field is empty
       return;
     }
 
@@ -42,7 +72,7 @@ const CommentsPage = () => {
     try {
       const res = await dispatch(createComment(topicOfTheDay.id, commentData));
       console.log("res", res);
-
+      setContent(""); // Reset content after successful submission
       dispatch(fetchCommentsForTopic(topicOfTheDay.id));
     } catch (error) {
       console.error("Error creating topic:", error);
@@ -92,7 +122,9 @@ const CommentsPage = () => {
                     onChange={(e) => setEditedContent(e.target.value)}
                   />
                 ) : (
-                  <p>{comment.username || 'User'} said: {comment.content}</p>
+                  <p>
+                    {comment.username || "User"} said: {comment.content}
+                  </p>
                 )}
                 {currentUserId === comment.user_id && (
                   <>
@@ -122,7 +154,7 @@ const CommentsPage = () => {
               </div>
             ))}
           </div>
-          <form onSubmit={handleSubmit}>
+          {/* <form onSubmit={handleSubmit}>
             <div>
               <label>New Comment</label>
               <input
@@ -131,6 +163,18 @@ const CommentsPage = () => {
                 onChange={(e) => setContent(e.target.value)}
               />
               {errors.content && <p>{errors.content}</p>}
+            </div>
+            <button type="submit">Create Comment</button>
+          </form> */}
+
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>New Comment</label>
+              <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+              />
+              {contentError && <p className="error">{contentError}</p>}
             </div>
             <button type="submit">Create Comment</button>
           </form>

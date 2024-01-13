@@ -10,6 +10,8 @@ import {
   checkUserVote,
 } from "../../store/topics";
 import { castVote, removeVote } from "../../store/topics";
+import Modal from "./TopicModal";
+import ConfirmationModal from "./TopicDeleteConfirm";
 import "./topic.css";
 
 const TopicList = () => {
@@ -24,7 +26,15 @@ const TopicList = () => {
   const topicsObject = useSelector((state) => state.topics);
   const topicsArray = topicsObject && Object.values(topicsObject);
 
-  const sortedTopics = topicsArray.sort((a, b) => new Date(b?.created_at) - new Date(a?.created_at));
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState("create");
+
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [topicToDelete, setTopicToDelete] = useState(null);
+
+  const sortedTopics = topicsArray.sort(
+    (a, b) => new Date(b?.created_at) - new Date(a?.created_at)
+  );
 
   useEffect(() => {
     dispatch(checkUserVote());
@@ -34,11 +44,25 @@ const TopicList = () => {
     dispatch(fetchTopics()).catch(console.error);
   }, [dispatch]);
 
+  // const handleCreateTopic = async (topicData) => {
+  //   try {
+  //     const res = await dispatch(createTopic(topicData));
+  //     if (!res.errors) {
+  //       setShowForm(false);
+  //       dispatch(fetchTopics());
+  //     } else {
+  //       console.error("Failed to create topic:", res.errors);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error creating topic:", error);
+  //   }
+  // };
+
   const handleCreateTopic = async (topicData) => {
     try {
       const res = await dispatch(createTopic(topicData));
       if (!res.errors) {
-        setShowForm(false);
+        closeModal(); // Close the modal after successful topic creation
         dispatch(fetchTopics());
       } else {
         console.error("Failed to create topic:", res.errors);
@@ -56,16 +80,29 @@ const TopicList = () => {
     setShowForm(true);
     setEditingTopic(null);
   };
-  
 
   //need to push newest topic to top of list
 
-  const handleEditTopic = async (topicData) => {
+  // const handleEditTopic = async (topicData) => {
+  //   try {
+  //     const res = await dispatch(editTopic(editingTopic.id, topicData));
+  //     if (!res.errors) {
+  //       setShowForm(false);
+  //       setEditingTopic(null);
+  //       dispatch(fetchTopics());
+  //     } else {
+  //       console.error("Failed to update topic:", res.errors);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error updating topic:", error);
+  //   }
+  // };
+
+  const handleEditTopic = async (topicId, topicData) => {
     try {
-      const res = await dispatch(editTopic(editingTopic.id, topicData));
+      const res = await dispatch(editTopic(topicId, topicData));
       if (!res.errors) {
-        setShowForm(false);
-        setEditingTopic(null);
+        closeModal(); // Close the modal after successful topic edit
         dispatch(fetchTopics());
       } else {
         console.error("Failed to update topic:", res.errors);
@@ -87,6 +124,25 @@ const TopicList = () => {
   //     }
   // };
 
+  const handleDeleteClick = (topic) => {
+    // Save the topic to delete and show confirmation modal
+    setTopicToDelete(topic);
+    setShowDeleteConfirmation(true);
+  };
+
+  const closeDeleteConfirmation = () => {
+    // Close the confirmation modal and reset the topic to delete
+    setShowDeleteConfirmation(false);
+    setTopicToDelete(null);
+  };
+
+  const confirmDelete = async () => {
+    if (topicToDelete) {
+      await handleDeleteTopic(topicToDelete.id);
+    }
+    closeDeleteConfirmation();
+  };
+
   const handleDeleteTopic = async (topicId) => {
     try {
       const response = await fetch(`/api/topics/${topicId}`, {
@@ -101,9 +157,13 @@ const TopicList = () => {
     }
   };
 
+  // const handleEditClick = (topic) => {
+  //   setEditingTopic(topic);
+  //   setShowForm(true);
+  // };
+
   const handleEditClick = (topic) => {
-    setEditingTopic(topic);
-    setShowForm(true);
+    openModal("edit", topic);
   };
 
   const handleVote = (topicId) => {
@@ -113,10 +173,23 @@ const TopicList = () => {
     }
     dispatch(castVote(topicId));
   };
-  
 
   const handleUnvote = (topicId) => {
     dispatch(removeVote(topicId));
+  };
+
+  const handleSaveEdit = async (topicId, topicData) => {
+    // Call the API to save the edited topic, then reset the editing state
+    const res = await dispatch(editTopic(topicId, topicData));
+    if (!res.errors) {
+      setEditingTopic(null); // Exit editing mode
+    } else {
+      console.error("Failed to update topic:", res.errors);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingTopic(null); // Exit editing mode without saving
   };
 
   if (!topics || topics.length === 0) {
@@ -127,6 +200,17 @@ const TopicList = () => {
     console.error("Expected topics to be an array but got:", topics);
     return <p>Error: Topics data is not an array.</p>;
   }
+
+  const openModal = (mode, topic = null) => {
+    setModalMode(mode);
+    setEditingTopic(topic);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setEditingTopic(null); // Reset editing topic
+  };
 
   // return (
   //   <>
@@ -189,11 +273,9 @@ const TopicList = () => {
           >
             Create New Topic
           </button> */}
-          <button onClick={handleCreateButtonClick}>
-  Create New Topic
-</button>
+          <button onClick={() => openModal("create")}>Create New Topic</button>
         </div>
-        <div>
+        {/* <div>
           {showForm && (
             <TopicForm
               existingTopic={editingTopic}
@@ -204,27 +286,51 @@ const TopicList = () => {
               }}
             />
           )}
-        </div>
-  
+        </div> */}
+
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <TopicForm
+            mode={modalMode}
+            existingTopic={editingTopic}
+            onSubmit={
+              modalMode === "edit" ? handleEditTopic : handleCreateTopic
+            }
+            onCancel={closeModal}
+          />
+        </Modal>
+
         <div>
           <ul>
-            {sortedTopics.length > 0 && sortedTopics.map((topic) => ( //console.log the topic here
-              <Topic
-                key={topic ? topic.id : undefined}
-                topic={topic}
-                onEdit={handleEditClick}
-                onDelete={handleDeleteTopic}
-                onVote={handleVote}
-                onUnvote={handleUnvote}
-                userOwns={topic?.user_id === user?.id}
-              />
-            ))}
+            {sortedTopics.length > 0 &&
+              sortedTopics.map(
+                (
+                  topic //console.log the topic here
+                ) => (
+                  <Topic
+                    key={topic ? topic.id : undefined}
+                    topic={topic}
+                    onEdit={handleEditClick}
+                    // onDelete={handleDeleteTopic}
+                    onDelete={() => handleDeleteClick(topic)}
+                    onVote={handleVote}
+                    onUnvote={handleUnvote}
+                    userOwns={topic?.user_id === user?.id}
+                  />
+                )
+              )}
           </ul>
+
+          <ConfirmationModal
+            isOpen={showDeleteConfirmation}
+            onClose={closeDeleteConfirmation}
+            onConfirm={confirmDelete}
+          >
+            Are you sure you want to delete your topic proposal?
+          </ConfirmationModal>
         </div>
       </div>
     </>
   );
-  
 };
 
 export default TopicList;
