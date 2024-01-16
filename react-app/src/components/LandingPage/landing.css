@@ -5,7 +5,7 @@
     height: calc(100vh - 60px); /* Adjusted for a navbar height */
     margin-top: 60px; /* Space for the navbar */
     position: relative; /* Needed for absolute positioning of pillars */
-    overflow-x: hidden; /* Prevents horizontal scroll if pillars are wide */
+    
   }
   
   .pillar {
@@ -83,3 +83,22 @@
     }
   }
   
+
+  .comment-content-landing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 14px;
+  }
+
+  .said-landing{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 5px;
+    opacity: 0.3;
+  }

@@ -35,7 +35,9 @@ const LandingPage = () => {
         <div className="comments-preview">
           {comments.slice(0, 3).map(comment => (
             <div key={comment.id} className="comment">
-              <p><span className="comment-username">{comment.username || 'User'}</span> said: {comment.content}</p>
+              <p><span className="comment-username">{comment.username || 'User'}</span>
+              <span className='said-landing'>said:</span>
+              <span className="comment-content-landing">{comment.content}</span></p>
             </div>
           ))}
         </div>

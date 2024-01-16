@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { checkUserVote } from "../../store/topics";
+import "./topic.css";
 
 function Topic({ topic, onEdit, onSaveEdit, onCancelEdit, onDelete, onVote, onUnvote, userOwns }) {
   console.log("topic", topic);
@@ -36,23 +37,29 @@ function Topic({ topic, onEdit, onSaveEdit, onCancelEdit, onDelete, onVote, onUn
   const voted = topic?.votes?.some((vote) => vote?.user_id === user?.id);
 
   return (
-    <div className="topic">
-      <h3>{topic.title}</h3>
+    <div className="topic-item">
+      <h3 className="topic-title">{topic.title}</h3>
       <p>{topic.description}</p>
-      <small>Created at: {createdAt}</small>
-      <br />
-      <small>Last updated: {updatedAt}</small>
-      <p>Votes: {voteCount}</p>
-      <button onClick={() => onEdit(topic)} disabled={!userOwns}>Edit</button>
-      <button onClick={() => onDelete(topic.id)} disabled={!userOwns}>Delete</button>
-
-      {!hasVoted ? (
-        <button onClick={() => onVote(topic.id)}>Vote</button>
-      ) : (
-        <button disabled>Vote</button>
-      )}
-
-      {voted && <button onClick={() => onUnvote(topic.id)}>Unvote</button>}
+      <div className="topic-metadata">
+        <small>Created at: {new Date(topic?.created_at).toLocaleString()}</small>
+        <br></br>
+        <small>Last updated: {new Date(topic?.updated_at).toLocaleString()}</small>
+      </div>
+      <p>Votes: {topic.vote_count}</p>
+      <div className="topic-actions">
+        {user && userOwns && (
+        <>
+        <button className="edit-button" onClick={() => onEdit(topic)} disabled={!userOwns}>Edit</button>
+        <button className="delete-button" onClick={() => onDelete(topic.id)} disabled={!userOwns}>Delete</button>
+        </>
+        )}
+        {!voted ? (
+          <button className="vote-button" onClick={() => onVote(topic.id)}>Vote</button>
+        ) : (
+          <button className="vote-button" disabled>Vote</button>
+        )}
+        {voted && <button className="unvote-button" onClick={() => onUnvote(topic.id)}>Unvote</button>}
+      </div>
     </div>
   );
 }

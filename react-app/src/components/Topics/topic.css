@@ -17,3 +17,435 @@
     /* Add more styles as needed */
   }
   
+
+  .topic-container {
+    background-color: #f5dfe6; /* Or any other color used in comments page */
+    border-radius: 25px;
+    padding: 2rem;
+    margin-top: 2rem; /* Add space above the topic bubble */
+    position: relative; /* Position relative for image to overlap if needed */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Soft shadow for depth */
+  }
+
+  .topic-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+
+  .topic {
+    margin-bottom: 1rem;
+    background: #f6d2d2; /* Or match the comment background */
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  /* Style the topic form to match the new comment form */
+  .topic-form {
+    background: #f5dfe6;
+    border-radius: 25px;
+    padding: 1rem;
+    margin-top: 2rem;
+  }
+
+  .topic-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Arial', sans-serif;
+}
+
+.topic-item {
+  background: #f5dfe6; /* A soft pink similar to the comments section */
+  border-radius: 15px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.topic-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.topic-title {
+  font-size: 1.5rem;
+  font-family: 'Times New Roman', Times, serif;
+  margin-bottom: 0.5rem;
+}
+
+.topic-actions {
+  display:inline;
+  gap: 0.1rem;
+  margin-top: 1rem;
+}
+
+.topic-actions button {
+  background: #8d8ab1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.topic-actions button:hover {
+  background: #0056b3;
+}
+
+.new-topic-form {
+  background: #f5dfe6;
+  border-radius: 25px;
+  padding: 1rem;
+  margin-top: 2rem;;
+}
+
+.new-topic-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.new-topic-form textarea {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  height: 100px;
+  resize: none;
+  position: relative;
+  z-index: 100;
+}
+
+.new-topic-form .error {
+  color: #d32f2f;
+  margin-top: 0.5rem;
+}
+
+.woow{
+  font-size: 50px;
+    font-family: 'Times New Roman', Times, serif;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.new-topic-form button {
+  align-items: center;
+  display: block;
+  width: 100%;
+  background: #8d8ab1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+ 
+transition: background-color 0.3s ease;
+}
+
+.new-topic-form-button {
+  align-items: center;
+  display: block;
+  width: 100%;
+  background: #b51b94;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background-color 0.7s ease;
+  
+}
+
+.login-to-propose-button{
+  align-items: center;
+  display: block;
+  width: 100%;
+  background: #b51b94;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  
+
+}
+
+.new-topic-form-button:hover {
+background: #0056b3;
+}
+
+.login-to-propose {
+background: #f5dfe6;
+color: #8d8ab1;
+text-align: center;
+padding: 1rem;
+border-radius: 25px;
+display: block;
+text-decoration: none;
+margin-top: 2rem;
+transition: background-color 0.3s, color 0.3s;
+}
+
+.login-to-propose-button:hover {
+background: #38af59ce;
+color: #0056b3;
+cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+/* Responsive styles if needed /
+.new-topic-form, .topic-item {
+/ Adjust the layout for smaller screens */
+}
+  
+.topic {
+background: #dff3f5; 
+border-radius: 15px;
+padding: 1.5rem;
+margin-bottom: 1rem;
+box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+transition: box-shadow 0.3s ease;
+}
+
+.topic:hover {
+box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.topic h3 {
+font-size: 1.8rem;
+color: #35503f; /* Dark color for the title */
+margin-bottom: 0.5rem;
+}
+
+.topic p {
+font-size: 1rem;
+margin-bottom: 1rem;
+color: #333; /* Darker font color for readability */
+}
+
+.topic small {
+display: block;
+font-size: 0.8rem;
+margin-bottom: 0.5rem;
+color: #666; /* Light color for less important information */
+}
+
+.topic-actions {
+display: flex;
+justify-content: space-evenly;
+margin-top: 1rem;
+}
+
+.topic-actions button {
+background: #8d8ab1;
+color: white;
+border: none;
+border-radius: 5px;
+padding: 0.5rem 1rem;
+cursor: pointer;
+transition: background-color 0.3s ease;
+font-size: 1rem;
+}
+
+.topic-actions button:hover {
+background: #0056b3; /* Darker color on hover */
+}
+
+.topic-actions button:disabled
+{
+background: #ccc;
+cursor: not-allowed;
+color: #666; /* Grayed out color for disabled state */
+}
+
+
+.topic-actions .edit-button {
+background: #5f8f60; 
+}
+
+.topic-actions .edit-button:hover {
+background: #388e3c; /* A darker green on hover */
+}
+
+.topic-actions .delete-button {
+background: #8e3b35; /* A red background for delete action */
+}
+
+.topic-actions .delete-button:hover {
+background: #d32f2f; /* A darker red on hover */
+}
+
+.topic-actions .vote-button {
+background: #16a7b7; /* A yellow background for vote action /
+color: #333; / Dark color for text to ensure contrast */
+}
+
+.topic-actions .vote-button:hover {
+background: #000a0d; /* A darker yellow on hover */
+}
+
+.topic-actions .unvote-button {
+background: #a01414; /* A neutral color for unvote action */
+}
+
+.topic-actions .unvote-button:hover {
+background: #bdbdbd; /* A darker grey on hover */
+}
+
+/* Additional responsiveness for smaller screens */
+@media (max-width: 768px) {
+.topic {
+padding: 1rem;
+}
+
+.topic-actions {
+flex-direction: column;
+}
+
+.topic-actions button {
+width: 100%;
+margin-bottom: 0.5rem; /* Add spacing between stacked buttons */
+}
+}
+
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Dim the background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* High z-index to be on top of other content */
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: auto;
+  z-index: 1051;
+  padding: 2rem;
+  width: 50%; /* Or a fixed size like 600px depending on your preference */
+  max-width: 600px; /* Or as much as you need */
+  box-sizing: border-box; 
+  position: relative; /* Needed to position close button or any other absolute elements inside the modal */
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-confirm-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+}
+
+.modal-confirm-button, .modal-cancel-button {
+  background: #8d8ab1;
+  color: white
+;
+border: none;
+border-radius: 5px;
+padding: 0.5rem 1rem;
+cursor: pointer;
+transition: background-color 0.3s ease;
+font-weight: bold; /* Make the text bold */
+}
+
+.modal-confirm-button:hover, .modal-cancel-button:hover {
+background: #0056b3; /* Darker shade on hover */
+}
+
+.modal-confirm-button {
+background: #4caf50; /* A green color to indicate confirm actions */
+}
+
+.modal-cancel-button {
+background: #f44336; /* A red color to indicate cancel/close actions */
+}
+
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  height: 40px; /* Or as much as you need */
+  padding: 0.5rem;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #0056b3;
+  box-shadow: 0 0 0 0.2rem rgba(0, 86, 179, 0.25);
+}
+
+.error-message {
+  color: #d32f2f;
+  margin-top: 0.5rem;
+}
+
+.form-actions {
+  text-align: right;
+  margin-top: 1rem;
+}
+
+.submit-button, .cancel-button {
+  /* Same styles as the modal buttons */
+  background: #8d8ab1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover, .cancel-button:hover {
+  background: #0056b3;
+}
+
+.cancel-button {
+  background: #ccc;
+  margin-left: 0.5rem; /* Add space between the buttons */
+}
+
+.cancel-button:hover {
+  background: #bbb;
+}
+
+
+textarea.form-control {
+  height: 100px; /* Or as much as you need */
+  /* Rest of the styles remain the same */
+}

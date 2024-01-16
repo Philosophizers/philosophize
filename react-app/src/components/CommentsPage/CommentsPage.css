@@ -1,0 +1,179 @@
+.comments-container {
+    max-width: 1200px; /* Set a max-width for the container */
+    margin: 0 auto; /* Center the container */
+    padding: 2rem;
+    font-family: 'Arial', sans-serif; /* Use a modern font-family */
+  }
+  
+  .comment-section {
+    background: #fc6796; /* Light pink background for the comment bubble */
+    border-radius: 25px; /* Rounded corners for the bubble */
+    padding: 2rem;
+    margin-top: 2rem; /* Add space above the comment bubble */
+    position: relative; /* Position relative for the image to overlap */
+    z-index: 1; /* Ensure the z-index is higher than the image */
+  }
+  
+  .comment-image {
+    position: absolute;
+
+    top: 100px; /* Adjust for the image to overlap */
+    right: -80px; /* Position it towards the right */
+    width: 800px; /* A larger width for the image */
+    z-index: 0; /* Place it behind the comment bubble */
+  }
+  
+  .comment {
+    margin-bottom: 1rem;
+    background: #f6d2d2; /* White background for each comment */
+    border-radius: 15px; /* Slightly rounded corners for the comments */
+    border-width: 500px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Soft shadow for depth */
+  }
+  
+  .comment-topic {
+    font-size: 50px;
+    font-family: 'Times New Roman', Times, serif;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  
+  .comment-actions {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 0.5rem; /* Add space between buttons */
+    margin-top: 1rem; /* Add space above the buttons */
+  }
+  
+  .comment-actions button {
+    background: #8d8ab1; /* Bootstrap primary color for buttons */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .comment-actions button:hover {
+    background: #0056b3; /* A darker shade for hover state */
+  }
+  
+  .comment-actions button:disabled {
+    background: #ccc;;
+  cursor: not-allowed;  
+  }
+  
+  .new-comment-form {
+  background: #ba97e4; 
+  border-radius: 25px; 
+  padding: 1rem;
+  margin-top: 2rem; 
+  position: relative;
+  z-index: 1;
+  
+
+  }
+  
+  .new-comment-form label {
+  display: block; 
+  margin-bottom: 0.5rem;
+  color: white;
+  text-align: center;
+  }
+  
+  .new-comment-form textarea {
+  width: 100%; 
+  border-radius: 5px; 
+  border: 1px solid #ccc; 
+
+  height: 100px;
+  resize: none; 
+  }
+  
+  .new-comment-form .error {
+  color: #d32f2f; 
+  margin-top: 0.5rem; 
+  }
+  
+  .new-comment-form button {
+  display: block; 
+  width: 100%;
+  background: #8d8ab1; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 1rem; 
+  margin-top: 1rem; 
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
+  }
+  
+  .new-comment-form button:hover {
+  background: #0056b3; 
+  }
+  
+ 
+  .login-to-comment {
+  background: #f5dfe6; 
+  color: #8d8ab1;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 25px;
+  display: block; 
+  text-decoration: none;
+  margin-top: 2rem; 
+  transition: background-color 0.3s, color 0.3s; 
+  }
+  
+  .login-to-comment:hover {
+  background: #ffffff; 
+  color: #0056b3; 
+  cursor: pointer;
+  }
+  
+
+  .comment-username {
+    font-weight:bold; /* Make username bold */
+    font-size: 1.5rem;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(255, 255, 255);
+    padding: 0.5rem 0.8rem; /* Padding around the text */
+    border-radius: 10px; /* Rounded corners for highlight */
+    margin-right: 0.5rem; /* Space between username and comment */
+    
+  }
+  
+  .comment-content {
+    margin-top: 13px;
+    text-indent: 1rem; /* Indent for the first line of the comment */
+    display: block; /* Make content a block to apply text-indent */
+  }
+
+
+  .comment input[type="text"] {
+    height: 10rem; /* Set the height of the input */
+    width: 100%; /* Make the input take full width of its parent */
+    margin-top: 0.5rem; /* Add a bit of margin on top for spacing */
+    border: 1px solid #ccc; /* Add a light border to the input */
+    border-radius: 4px; 
+  }
+  
+  .comment-edit-textarea {
+    width: 100%; /* Make textarea take full width */
+    height: auto; /* Adjust height automatically */
+    min-height: 50px; /* Minimum height */
+    border: 1px solid #ccc; /* Same border as other inputs */
+    border-radius: 4px; /* Rounded corners */
+    margin-top: 10px;
+    font-family: inherit; /* To match the font of other elements */
+    resize: vertical; /* Allow vertical resizing, none for no resizing */
+  }
+  
+
+  @media (max-width: 768px) {
+    .comment-image {
+      display: none; /* Hide the image on smaller screens */
+    }
+  }

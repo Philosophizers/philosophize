@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./topic.css";
 
 const TopicForm = ({ mode, existingTopic, onSubmit, onCancel }) => {
   const [title, setTitle] = useState(existingTopic ? existingTopic.title : "");
@@ -81,55 +82,37 @@ const TopicForm = ({ mode, existingTopic, onSubmit, onCancel }) => {
     const topicData = { title, description };
     onSubmit(topicData);
   };
-
   return (
-    // <form onSubmit={handleSubmit}>
-    //     <div>
-    //         <label>Title</label>
-    //         <input
-    //             type="text"
-    //             value={title}
-    //             onChange={(e) => setTitle(e.target.value)}
-    //         />
-    //         {errors.title && <p>{errors.title}</p>}
-    //     </div>
-    //     <div>
-    //         <label>Description</label>
-    //         <textarea
-    //             value={description}
-    //             onChange={(e) => setDescription(e.target.value)}
-    //         />
-    //         {errors.description && <p>{errors.description}</p>}
-    //     </div>
-    //     <button type="submit">{existingTopic ? 'Update Topic' : 'Create Topic'}</button>
-    //     {existingTopic && <button type="button" onClick={onCancel}>Cancel</button>}
-    // </form>
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Title</label>
+    <form onSubmit={handleSubmit} className="topic-form">
+      <div className="form-group">
+        <label htmlFor="title" className="form-label">Title</label>
         <input
+          id="title"
           type="text"
+          className="form-control"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        {titleError && <p className="error">{titleError}</p>}
+        {titleError && <p className="error-message">{titleError}</p>}
       </div>
-      <div>
-        <label>Description</label>
+      <div className="form-group">
+        <label htmlFor="description" className="form-label">Description</label>
         <textarea
+          id="description"
+          className="form-control"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        {descriptionError && <p className="error">{descriptionError}</p>}
+        {descriptionError && <p className="error-message">{descriptionError}</p>}
       </div>
-      {/* <button type="submit">{existingTopic ? 'Update Topic' : 'Create Topic'}</button>
-  {existingTopic && <button type="button" onClick={onCancel}>Cancel</button>} */}
-      <button type="submit">
-        {mode === "edit" ? "Update Topic" : "Create Topic"}
-      </button>
-      <button type="button" onClick={onCancel}>
-        Cancel
-      </button>
+      <div className="form-actions">
+        <button type="submit" className="submit-button">
+          {mode === "edit" ? "Update Topic" : "Create Topic"}
+        </button>
+        <button type="button" onClick={onCancel} className="cancel-button">
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };
