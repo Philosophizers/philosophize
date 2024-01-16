@@ -57,8 +57,36 @@
   font-family: 'Arial', sans-serif;
 }
 
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .topic-item {
-  background: #f5dfe6; /* A soft pink similar to the comments section */
+  /* Define a linear gradient background with your choice of colors */
+  background: linear-gradient(-45deg, #3d6438, #1daf86, #0097b9, #bd007b);
+  background-size: 400% 400%;
+  color: white;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  /* Animation */
+  animation: gradientBackground 15s ease infinite;
+}
+
+.topic-item {
+  color: white;
+  font-size: 1.3rem;
   border-radius: 15px;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -66,15 +94,25 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+
+
 .topic-item:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
 .topic-title {
-  font-size: 1.5rem;
-  font-family: 'Times New Roman', Times, serif;
-  margin-bottom: 0.5rem;
+  font-weight:bold; /* Make username bold */
+    font-size: 1.8rem;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(255, 255, 255);
+    border-radius: 10px; /* Rounded corners for highlight */
+    margin-right: 0.5rem; /* Space between username and comment */
+    text-shadow:
+    -1.5px -1.5px 0 #000,
+    1.5px -1.5px 0 #000,
+    -1.5px 1.5px 0 #000,
+    1.5px 1.5px 0 #000;
 }
 
 .topic-actions {
@@ -244,7 +282,7 @@ margin-top: 1rem;
 }
 
 .topic-actions button {
-background: #8d8ab1;
+background: #c5309d;
 color: white;
 border: none;
 border-radius: 5px;
@@ -255,7 +293,7 @@ font-size: 1rem;
 }
 
 .topic-actions button:hover {
-background: #0056b3; /* Darker color on hover */
+background: #da8a29; /* Darker color on hover */
 }
 
 .topic-actions button:disabled
@@ -267,7 +305,7 @@ color: #666; /* Grayed out color for disabled state */
 
 
 .topic-actions .edit-button {
-background: #5f8f60; 
+background: #2478e7; 
 }
 
 .topic-actions .edit-button:hover {
@@ -283,12 +321,12 @@ background: #d32f2f; /* A darker red on hover */
 }
 
 .topic-actions .vote-button {
-background: #16a7b7; /* A yellow background for vote action /
+background: #e9875aed; /* A yellow background for vote action /
 color: #333; / Dark color for text to ensure contrast */
 }
 
 .topic-actions .vote-button:hover {
-background: #000a0d; /* A darker yellow on hover */
+background: #19938b; /* A darker yellow on hover */
 }
 
 .topic-actions .unvote-button {
@@ -449,3 +487,23 @@ textarea.form-control {
   height: 100px; /* Or as much as you need */
   /* Rest of the styles remain the same */
 }
+
+.vote-describe{
+text-align: center;
+margin-top: 14px;
+  font-size: 1.3rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(0, 0, 0);
+  border-radius: 10px; /* Rounded corners for highlight */
+  margin-right: 0.5rem; /* Space between username and comment */
+  
+}
+
+.one-vote{
+  text-align: center;
+  margin-top: 14px;
+    font-size: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(33, 164, 13);
+    
+  }

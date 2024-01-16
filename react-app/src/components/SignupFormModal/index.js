@@ -1,20 +1,31 @@
+
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import { signUp } from "../../store/session";
+import { signUp, authenticate } from "../../store/session";
 import { Link } from "react-router-dom";
 import "./SignupForm.css";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
+  const sessionMember = useSelector((state) => state.session.member)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
   const history = useHistory();
+  const [errors, setErrors] = useState([]);
+  
+
+  const disabled =
+    !username||
+    !email ||
+    !password ||
+    !confirmPassword;
+
+  if (sessionMember) return <Redirect to="/" />;
 
   function isEmail(val) {
     let regEmail =
@@ -27,7 +38,9 @@ function SignupFormModal() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault();
+
+    let errorList = {};
 
     const response = await fetch("/api/auth/signup", {
       method: "POST",
@@ -50,24 +63,40 @@ function SignupFormModal() {
       history.push("/");
     }
 
-    // if (!isEmail(email)) {
-    //   setErrors(["Please enter a valid email address."]);
-    //   return; // Stop the form submission if the email is invalid
-    // }
+    if (!username) errorList.username = "Username is required";
+    if (!email || !email.includes("@"))
+      errorList.email = "Valid email is required";
+    if (!password || password.length<6) errorList.password = "Valid Password is required";
+    if (password !== confirmPassword)
+      errorList.confirmPassword = "Passwords must match";
 
-    // if (password !== confirmPassword) {
-    //   setErrors(["Confirm Password field must be the same as the Password field"]);
-    //   return; // Stop the form submission if the passwords do not match
-    // }
+    if (Object.values(errorList).length > 0) {
+      setErrors(errorList);
+      return;
+    }
 
-    // // If all validations pass, proceed to dispatch the signup action
-    // const data = await dispatch(signUp(username, email, password));
-    // if (data && data.errors) {
-    //   setErrors(data.errors);
-    // } else {
-    //   closeModal(); // Close the modal only if there are no errors
-    //   history.push('/'); // Redirect to home page
-    // }
+    if (password === confirmPassword) {
+      setErrors({});
+      const response = await dispatch(
+        signUp({
+          username,
+          email,
+          password,
+        })
+      ).catch((res) => res);
+      if (response && response[0].startsWith("email")) {
+        const errorList_email = { "email": response[0].slice(8) };
+        setErrors(errorList_email);
+      } else {
+        dispatch(authenticate());
+        history.push('/')
+      }
+    } else {
+    return setErrors({
+      confirmPassword:
+        "Confirm Password field must be the same as the Password field",
+    });
+  }
   };
 
   return (
@@ -79,51 +108,63 @@ function SignupFormModal() {
             <Link to="/" className="close-modal-button">
               Back to Home Page
             </Link>
-            {errors.length > 0 && (
-              <ul>
-                {errors.map((error, idx) => (
-                  <li key={idx} className="error-message">
-                    {error}
-                  </li>
-                ))}
-              </ul>
+            <label>
+            Username
+            </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            {errors.username && (
+              <p style={{ fontSize: "10px", color: "red" }}>
+                *{errors.username}
+              </p>
             )}
             <label>
-              Email
-              <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+            Email
             </label>
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+            {errors.email && (
+              <p style={{ fontSize: "10px", color: "red" }}>*{errors.email}</p>
+            )}
             <label>
-              Username
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
+            Password
             </label>
-            <label>
-              Password
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            {errors.password && (
+              <p style={{ fontSize: "10px", color: "red" }}>
+                *{errors.password}
+              </p>
+            )}
+
+          <label>
+            Confirm Password
             </label>
-            <label>
-              Confirm Password
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
-            </label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
+            />
+            {errors.confirmPassword && (
+              <p style={{ fontSize: "10px", color: "red" }}>
+                *{errors.confirmPassword}
+              </p>
+            )}
             <button type="submit">Sign Up</button>
           </form>
           <div className="modal-link">

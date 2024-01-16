@@ -25,7 +25,6 @@
   
   .comment {
     margin-bottom: 1rem;
-    background: #f6d2d2; /* White background for each comment */
     border-radius: 15px; /* Slightly rounded corners for the comments */
     border-width: 500px;
     padding: 1rem;
@@ -70,11 +69,12 @@
   border-radius: 25px; 
   padding: 1rem;
   margin-top: 2rem; 
-  position: relative;
-  z-index: 1;
+  width: 50%;
   
 
   }
+
+  
   
   .new-comment-form label {
   display: block; 
@@ -117,7 +117,8 @@
  
   .login-to-comment {
   background: #f5dfe6; 
-  color: #8d8ab1;
+  font-weight: bold;
+  color: #362bae;
   text-align: center;
   padding: 1rem;
   border-radius: 25px;
@@ -142,7 +143,11 @@
     padding: 0.5rem 0.8rem; /* Padding around the text */
     border-radius: 10px; /* Rounded corners for highlight */
     margin-right: 0.5rem; /* Space between username and comment */
-    
+    text-shadow:
+    -0.7px -0.7px 0 #000,
+    0.7px -0.7px 0 #000,
+    -0.7px 0.7px 0 #000,
+    0.7px 0.7px 0 #000;
   }
   
   .comment-content {

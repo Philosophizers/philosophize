@@ -62,6 +62,7 @@ a :hover {
 /* Ensure clickable elements can be interacted with */
 .homeImage, .profile-button {
   z-index: 2; /* Higher z-index for clickable elements */
+  
 }
 
 /* Additional styling for buttons and links within the dropdown */
@@ -109,14 +110,52 @@ a :hover {
 }
 
 .close-modal-button {
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  padding: 10px 20px;
+  gap: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 20px;
+  margin-bottom: 14px;
   font-size: 20px;
-  text-align: center;
-  color: #4591c3;
+  color: #ffffff;
+  text-decoration: none;
+  opacity: 0.8;
+  background-color: rgb(39, 95, 56);
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.3s;
   
   
 } 
 
 .close-modal-button:hover {
-  color: #bd38c9;
+  background-color: #2aa58c; /* Lighter red on hover */
+  transform: translateY(-3px); /* Slight move up on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+  cursor: pointer;
+}
+
+
+.ddbutton {
+  background-color: #edededa8;
+  color: rgb(3, 99, 82);
+  padding: 16px;
+  font-size: 16px;
+  border: 1px;
+  cursor: pointer;
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.ddbutton:hover {
+  background-color: #2aa58c; /* Lighter red on hover */
+  transform: translateY(-3px); /* Slight move up on hover */
+  color: white;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
   cursor: pointer;
 }
