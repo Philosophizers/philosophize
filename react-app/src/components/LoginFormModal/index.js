@@ -48,7 +48,7 @@ function LoginFormModal() {
   <div className="modal-content">
     <div className="modal-header">Log In</div>
     <form onSubmit={handleSubmit} className="modal-form">
-    <Link to="/" className="close-modal-button">Back to Home Page</Link>
+    <Link to="/" className="close-modal-button">⬅️  Back to Home Page</Link>
         <ul>
         {Array.isArray(errors) && errors.map((error, idx) => (
           <li key={idx}>{error}</li>

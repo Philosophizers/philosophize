@@ -287,6 +287,8 @@ const TopicList = () => {
             // If user is not logged in, show 'Log in to Propose a New Topic' button
             <button onClick={handleLoginRedirect} className="login-to-propose-button">Log in to Propose a New Topic!</button>
           )}
+          <div className="vote-describe">Vote on a topic you would like to discuss. The topic with the most votes by midnight will become tomorrow's Topic of the Day!</div>
+          <div className="one-vote">WARNING: You only get one vote per day, so use it wisely.</div>
         </div>
         {/* <div>
           {showForm && (

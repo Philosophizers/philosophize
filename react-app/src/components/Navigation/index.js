@@ -41,6 +41,6 @@ return (
     </ul>
 </header>
 );
-}
+};
 
 export default Navigation;

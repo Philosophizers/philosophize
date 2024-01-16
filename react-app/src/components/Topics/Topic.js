@@ -53,11 +53,11 @@ function Topic({ topic, onEdit, onSaveEdit, onCancelEdit, onDelete, onVote, onUn
         <button className="delete-button" onClick={() => onDelete(topic.id)} disabled={!userOwns}>Delete</button>
         </>
         )}
-        {!voted ? (
-          <button className="vote-button" onClick={() => onVote(topic.id)}>Vote</button>
-        ) : (
-          <button className="vote-button" disabled>Vote</button>
-        )}
+        {!hasVoted ? (
+        <button onClick={() => onVote(topic.id)}>Vote</button>
+      ) : (
+        <button disabled>Vote</button>
+      )}
         {voted && <button className="unvote-button" onClick={() => onUnvote(topic.id)}>Unvote</button>}
       </div>
     </div>
