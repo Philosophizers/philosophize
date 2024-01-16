@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useModal } from "../../context/Modal";
 import {
   fetchTopicOfTheDay,
   createComment,
@@ -7,8 +9,13 @@ import {
   removeComment,
   fetchCommentsForTopic,
 } from "../../store/topics";
+import ConfirmationModal from "../Topics/TopicDeleteConfirm";
+import thethinker from "./thethinker.png";
+import "./CommentsPage.css";
+
 const CommentsPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const topicOfTheDay = useSelector((state) => state.topics.topicOfTheDay);
   const comments = useSelector((state) => Object.values(state.topics.comments));
   const [content, setContent] = useState("");
@@ -16,10 +23,14 @@ const CommentsPage = () => {
 
   const [editCommentId, setEditCommentId] = useState(null);
   const [editedContent, setEditedContent] = useState("");
+  const [editingErrors, setEditingErrors] = useState({});
   const user = useSelector((state) => state.session.user);
   const currentUserId = user?.id;
 
   const [contentError, setContentError] = useState("");
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState(null);
+  const { openModal } = useModal();
 
   useEffect(() => {
     dispatch(fetchTopicOfTheDay());
@@ -41,30 +52,13 @@ const CommentsPage = () => {
     }
   }, [content]);
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   let newErrors = [];
-
-  //   if (newErrors.length > 0) {
-  //     setErrors(newErrors);
-  //     return;
-  //   }
-
-  //   const commentData = { content };
-  //   try {
-  //     const res = await dispatch(createComment(topicOfTheDay.id, commentData));
-  //     console.log("res", res);
-
-  //     dispatch(fetchCommentsForTopic(topicOfTheDay.id));
-  //   } catch (error) {
-  //     console.error("Error creating topic:", error);
-  //   }
-  // };
+  const handleLoginRedirect = () => {
+    history.push("/login");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (contentError || content.length === 0) {
-      // Handle the case when there are errors or the field is empty
       return;
     }
 
@@ -72,7 +66,7 @@ const CommentsPage = () => {
     try {
       const res = await dispatch(createComment(topicOfTheDay.id, commentData));
       console.log("res", res);
-      setContent(""); // Reset content after successful submission
+      setContent("");
       dispatch(fetchCommentsForTopic(topicOfTheDay.id));
     } catch (error) {
       console.error("Error creating topic:", error);
@@ -82,16 +76,33 @@ const CommentsPage = () => {
   const handleEdit = (comment) => {
     setEditCommentId(comment.id);
     setEditedContent(comment.content);
+    setEditingErrors({}); // Clear any previous editing errors
+  };
+
+  const handleCancelEdit = () => {
+    setEditCommentId(null);
+    setEditedContent("");
+    setEditingErrors({}); // Clear any editing errors
+  };
+
+  const handleOpenLoginModal = () => {
+    openModal("login");
   };
 
   const handleUpdate = async (commentId) => {
-    if (editedContent.trim() === "") {
-      // Handle empty content case, e.g., show an error message
-      return;
+    // Check if the edited content meets the length requirement
+    if (editedContent.trim().length < 50) {
+      setContentError("Content must be at least 50 characters");
+      return; // Stop the update if the content is too short
     }
+
+    // If the content length is valid, clear any previous error messages
+    setContentError("");
+
     try {
-      await dispatch(editComment(commentId, { content: editedContent }));
+      await dispatch(editComment(commentId, { content: editedContent.trim() }));
       setEditCommentId(null); // Reset edit state
+      setEditedContent(""); // Clear the edited content state
       dispatch(fetchCommentsForTopic(topicOfTheDay.id)); // Refresh comments
     } catch (error) {
       console.error("Error updating comment:", error);
@@ -107,14 +118,39 @@ const CommentsPage = () => {
     }
   };
 
+  const handleDeleteClick = (commentId) => {
+    setCommentToDelete(commentId);
+    setShowDeleteConfirmation(true);
+  };
+
+  const confirmDelete = async () => {
+    if (commentToDelete) {
+      try {
+        await dispatch(removeComment(commentToDelete));
+        dispatch(fetchCommentsForTopic(topicOfTheDay.id));
+        // Reset state and close modal
+        setCommentToDelete(null);
+        setShowDeleteConfirmation(false);
+      } catch (error) {
+        console.error("Error deleting comment:", error);
+      }
+    }
+  };
+
+  const closeDeleteConfirmation = () => {
+    setShowDeleteConfirmation(false);
+    setCommentToDelete(null);
+  };
+
   return (
-    <div>
-      <h1>Comments</h1>
+    <div className="comments-container">
       {topicOfTheDay ? (
-        <div>
-          <div>
-            {comments.map((comment) => (
-              <div key={comment.id}>
+        <>
+          <div className="comment-topic">{topicOfTheDay.title}</div>
+          <div className="comment-section">
+            <img src={thethinker} alt="Topic Image" className="comment-image" />
+            {/* {comments.map((comment) => (
+              <div key={comment.id} className="comment">
                 {editCommentId === comment.id ? (
                   <input
                     type="text"
@@ -125,60 +161,84 @@ const CommentsPage = () => {
                   <p>
                     {comment.username || "User"} said: {comment.content}
                   </p>
-                )}
-                {currentUserId === comment.user_id && (
-                  <>
-                    {editCommentId === comment.id ? (
-                      <button
-                        onClick={() => handleUpdate(comment.id)}
-                        disabled={currentUserId !== comment.user_id}
+                )} */}
+
+            {comments.map((comment) => (
+              <div
+                key={comment.id}
+                className="
+comment"
+              >
+                <div className="comment-info">
+                  <span className="comment-username">
+                    {comment.username || "User"}
+                  </span>
+                  <span className="said-landing">said:</span>
+                  {editCommentId === comment.id ? (
+                    <>
+                      <textarea
+                        className="comment-edit-textarea"
+                        value={editedContent}
+                        onChange={(e) => setEditedContent(e.target.value)}
+                      ></textarea>
+                      {editingErrors[comment.id] && (
+                        <div className="error-message">
+                          {editingErrors[comment.id]}
+                        </div>
+                      )}
+                      <div className="comment-actions">
+                        <button onClick={() => handleUpdate(comment.id)}>
+                          Save
+                        </button>
+                        <button onClick={handleCancelEdit}>Cancel</button>
+                      </div>
+                    </>
+                  ) : (
+                    <span className="comment-content">{comment.content}</span>
+                  )}
+                </div>
+                {currentUserId === comment.user_id && !editCommentId && (
+                  <div className="comment-actions">
+                    <button onClick={() => handleEdit(comment)}>Edit</button>
+                    <div>
+                      <ConfirmationModal
+                        isOpen={showDeleteConfirmation}
+                        onClose={closeDeleteConfirmation}
+                        onConfirm={confirmDelete}
                       >
-                        Save
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => handleEdit(comment)}
-                        disabled={currentUserId !== comment.user_id}
-                      >
-                        Edit
-                      </button>
-                    )}
+                        Are you sure you want to delete this comment?
+                      </ConfirmationModal>
+                    </div>
                     <button
-                      onClick={() => handleDelete(comment.id)}
+                      onClick={() => handleDeleteClick(comment.id)}
                       disabled={currentUserId !== comment.user_id}
                     >
                       Delete
                     </button>
-                  </>
+                  </div>
                 )}
               </div>
             ))}
           </div>
-          {/* <form onSubmit={handleSubmit}>
-            <div>
-              <label>New Comment</label>
-              <input
-                type="text"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-              />
-              {errors.content && <p>{errors.content}</p>}
-            </div>
-            <button type="submit">Create Comment</button>
-          </form> */}
-
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label>New Comment</label>
-              <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-              />
-              {contentError && <p className="error">{contentError}</p>}
-            </div>
-            <button type="submit">Create Comment</button>
-          </form>
-        </div>
+          {user ? (
+            <form onSubmit={handleSubmit} className="new-comment-form">
+              <div>
+                <label htmlFor="new-comment">New Comment</label>
+                <textarea
+                  id="new-comment"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                />
+                {contentError && <p className="error">{contentError}</p>}
+              </div>
+              <button type="submit">add a comment</button>
+            </form>
+          ) : (
+            <button onClick={handleLoginRedirect} className="login-to-comment">
+              Please log in to comment!
+            </button>
+          )}
+        </>
       ) : (
         <p>Loading topic...</p>
       )}

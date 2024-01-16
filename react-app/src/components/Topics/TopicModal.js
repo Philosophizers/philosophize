@@ -1,5 +1,6 @@
 // Modal.js
 import React from 'react';
+import "./topic.css";
 
 // const Modal = ({ isOpen, onClose, children }) => {
 //   if (!isOpen) return null;
@@ -30,14 +31,14 @@ const Modal = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
   
     return (
-      <div className="modal-backdrop" onClick={handleBackdropClick}>
-        <div className="modal-content" onClick={handleModalContentClick}>
-          {children}
-          {/* <button onClick={onClose}>Cancel</button> */}
-        </div>
+      <div className="modal-backdrop" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        {children}
+        <button className="modal-close-button" onClick={onClose}>×</button>
       </div>
-    );
-  };
+    </div>
+  );
+};
   
 
 export default Modal;

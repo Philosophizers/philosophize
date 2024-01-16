@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import "./SignupForm.css";
 
 function SignupFormModal() {
@@ -28,27 +28,47 @@ function SignupFormModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission
-  
-    if (!isEmail(email)) {
-      setErrors(["Please enter a valid email address."]);
-      return; // Stop the form submission if the email is invalid
-    }
-  
-    if (password !== confirmPassword) {
-      setErrors(["Confirm Password field must be the same as the Password field"]);
-      return; // Stop the form submission if the passwords do not match
-    }
-  
-    // If all validations pass, proceed to dispatch the signup action
-    const data = await dispatch(signUp(username, email, password));
-    if (data && data.errors) {
-      setErrors(data.errors);
+
+    const response = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+      }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      // Assuming the server responds with a status code of 400 or similar on error
+      setErrors(data.errors || ["An unexpected error occurred."]);
     } else {
-      closeModal(); // Close the modal only if there are no errors
-      history.push('/'); // Redirect to home page
+      closeModal();
+      history.push("/");
     }
+
+    // if (!isEmail(email)) {
+    //   setErrors(["Please enter a valid email address."]);
+    //   return; // Stop the form submission if the email is invalid
+    // }
+
+    // if (password !== confirmPassword) {
+    //   setErrors(["Confirm Password field must be the same as the Password field"]);
+    //   return; // Stop the form submission if the passwords do not match
+    // }
+
+    // // If all validations pass, proceed to dispatch the signup action
+    // const data = await dispatch(signUp(username, email, password));
+    // if (data && data.errors) {
+    //   setErrors(data.errors);
+    // } else {
+    //   closeModal(); // Close the modal only if there are no errors
+    //   history.push('/'); // Redirect to home page
+    // }
   };
-  
 
   return (
     <>
@@ -56,12 +76,18 @@ function SignupFormModal() {
         <div className="modal-content">
           <div className="modal-header">Sign Up</div>
           <form onSubmit={handleSubmit} className="modal-form">
-          <Link to="/" className="close-modal-button">Back to Home Page</Link>
-            <ul>
-              {errors.map((error, idx) => (
-                <li key={idx}>{error}</li>
-              ))}
-            </ul>
+            <Link to="/" className="close-modal-button">
+              Back to Home Page
+            </Link>
+            {errors.length > 0 && (
+              <ul>
+                {errors.map((error, idx) => (
+                  <li key={idx} className="error-message">
+                    {error}
+                  </li>
+                ))}
+              </ul>
+            )}
             <label>
               Email
               <input

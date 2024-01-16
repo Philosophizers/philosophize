@@ -12,10 +12,13 @@ import {
 import { castVote, removeVote } from "../../store/topics";
 import Modal from "./TopicModal";
 import ConfirmationModal from "./TopicDeleteConfirm";
+
+import { useHistory } from 'react-router-dom';
 import "./topic.css";
 
 const TopicList = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const topics = useSelector((state) => Object.values(state.topics));
   // let topics = useSelector((state) => state.topics);
   // topics = Object.values(topics);
@@ -57,6 +60,10 @@ const TopicList = () => {
   //     console.error("Error creating topic:", error);
   //   }
   // };
+
+  const handleLoginRedirect = () => {
+    history.push('/login'); // Redirect to login page
+  };
 
   const handleCreateTopic = async (topicData) => {
     try {
@@ -263,8 +270,8 @@ const TopicList = () => {
   return (
     <>
       <div>
-        <div>
-          <h1>Topics</h1>
+        <div className="topic-list-container">
+          <h1 className="woow">Topics</h1>
           {/* <button
             onClick={() => {
               setShowForm(true);
@@ -273,7 +280,13 @@ const TopicList = () => {
           >
             Create New Topic
           </button> */}
-          <button onClick={() => openModal("create")}>Create New Topic</button>
+          {user ? (
+            // If user is logged in, show 'Create New Topic' button
+            <button onClick={() => openModal("create")} className="new-topic-form-button">Create New Topic</button>
+          ) : (
+            // If user is not logged in, show 'Log in to Propose a New Topic' button
+            <button onClick={handleLoginRedirect} className="login-to-propose-button">Log in to Propose a New Topic!</button>
+          )}
         </div>
         {/* <div>
           {showForm && (

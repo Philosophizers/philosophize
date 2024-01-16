@@ -18,6 +18,19 @@ ul li {
   list-style: none;
 }
 
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+a :hover {
+  text-decoration: none;
+  color: #4591c3;
+  cursor: pointer;
+}
+
+
+
 
 /* Styling for the navigation links */
 .navli {
@@ -30,6 +43,8 @@ ul li {
   width: 30px; /* Adjust to your preference */
   height: auto;
 }
+
+
 
 /* Center the brand text */
 .brand-text {
@@ -78,6 +93,7 @@ ul li {
 .profile-dropdown li:hover,
 .profile-dropdown button:hover {
   background-color: #f2f2f2;
+  color:#4591c3;
 }
 
 .profile-dropdown button {
@@ -90,4 +106,17 @@ ul li {
 
 .hidden {
   display: none;
+}
+
+.close-modal-button {
+  font-size: 20px;
+  text-align: center;
+  color: #4591c3;
+  
+  
+} 
+
+.close-modal-button:hover {
+  color: #bd38c9;
+  cursor: pointer;
 }
