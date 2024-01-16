@@ -116,7 +116,7 @@ s steps(20, end) forwards, blinkCursor 0.7s step-end infinite;
   .comment {
     padding: 30px;
     border-radius: 5px;
-    max-width: calc(33.333% - 20px); 
+    max-width: calc(49.333% - 20px); 
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
   }
   

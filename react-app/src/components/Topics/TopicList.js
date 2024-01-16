@@ -34,6 +34,7 @@ const TopicList = () => {
 
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [topicToDelete, setTopicToDelete] = useState(null);
+  
 
   const sortedTopics = topicsArray.sort(
     (a, b) => new Date(b?.created_at) - new Date(a?.created_at)

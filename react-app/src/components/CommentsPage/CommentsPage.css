@@ -18,7 +18,7 @@
     position: absolute;
 
     top: 100px; /* Adjust for the image to overlap */
-    right: -80px; /* Position it towards the right */
+    right: -180px; /* Position it towards the right */
     width: 800px; /* A larger width for the image */
     z-index: 0; /* Place it behind the comment bubble */
   }
