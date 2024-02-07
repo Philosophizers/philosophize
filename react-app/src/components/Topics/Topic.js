@@ -18,6 +18,7 @@ function Topic({ topic, onEdit, onSaveEdit, onCancelEdit, onDelete, onVote, onUn
     onSaveEdit(topic.id, { title: editTitle, description: editDescription });
     setIsEditing(false);
   };
+  
 
   // Function to call when cancel button is clicked
   const handleCancel = () => {

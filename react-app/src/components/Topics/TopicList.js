@@ -13,7 +13,7 @@ import { castVote, removeVote } from "../../store/topics";
 import Modal from "./TopicModal";
 import ConfirmationModal from "./TopicDeleteConfirm";
 
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import "./topic.css";
 
 const TopicList = () => {
@@ -34,7 +34,6 @@ const TopicList = () => {
 
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [topicToDelete, setTopicToDelete] = useState(null);
-  
 
   const sortedTopics = topicsArray.sort(
     (a, b) => new Date(b?.created_at) - new Date(a?.created_at)
@@ -63,7 +62,7 @@ const TopicList = () => {
   // };
 
   const handleLoginRedirect = () => {
-    history.push('/login'); // Redirect to login page
+    history.push("/login"); // Redirect to login page
   };
 
   const handleCreateTopic = async (topicData) => {
@@ -117,8 +116,11 @@ const TopicList = () => {
       }
     } catch (error) {
       console.error("Error updating topic:", error);
+      console.log("Received response:", error.response);
     }
   };
+  
+  
 
   // you can do this without having to dispathc fetchTopics again
 
@@ -169,10 +171,21 @@ const TopicList = () => {
   //   setEditingTopic(topic);
   //   setShowForm(true);
   // };
-
   const handleEditClick = (topic) => {
+    console.log("Editing topic with ID:", topic.id);  // Ensure this logs the correct ID
     openModal("edit", topic);
   };
+
+  // const handleTopicSubmit = ({ topicId, title, description }) => {
+  //   if (topicId) {
+  //     // If topicId is present, it's an edit action
+  //     dispatch(editTopic(topicId, { title, description }));
+  //   } else {
+  //     // Handle create topic action
+  //   }
+  // };
+  
+  
 
   const handleVote = (topicId) => {
     if (!user) {
@@ -186,15 +199,15 @@ const TopicList = () => {
     dispatch(removeVote(topicId));
   };
 
-  const handleSaveEdit = async (topicId, topicData) => {
-    // Call the API to save the edited topic, then reset the editing state
-    const res = await dispatch(editTopic(topicId, topicData));
-    if (!res.errors) {
-      setEditingTopic(null); // Exit editing mode
-    } else {
-      console.error("Failed to update topic:", res.errors);
-    }
-  };
+  // const handleSaveEdit = async (topicId, topicData) => {
+  //   // Call the API to save the edited topic, then reset the editing state
+  //   const res = await dispatch(editTopic(topicId, topicData));
+  //   if (!res.errors) {
+  //     setEditingTopic(null); // Exit editing mode
+  //   } else {
+  //     console.error("Failed to update topic:", res.errors);
+  //   }
+  // };
 
   const handleCancelEdit = () => {
     setEditingTopic(null); // Exit editing mode without saving
@@ -283,13 +296,28 @@ const TopicList = () => {
           </button> */}
           {user ? (
             // If user is logged in, show 'Create New Topic' button
-            <button onClick={() => openModal("create")} className="new-topic-form-button">Create New Topic</button>
+            <button
+              onClick={() => openModal("create")}
+              className="new-topic-form-button"
+            >
+              Create New Topic
+            </button>
           ) : (
             // If user is not logged in, show 'Log in to Propose a New Topic' button
-            <button onClick={handleLoginRedirect} className="login-to-propose-button">Log in to Propose a New Topic!</button>
+            <button
+              onClick={handleLoginRedirect}
+              className="login-to-propose-button"
+            >
+              Log in to Propose a New Topic!
+            </button>
           )}
-          <div className="vote-describe">Vote on a topic you would like to discuss. The topic with the most votes by midnight will become tomorrow's Topic of the Day!</div>
-          <div className="one-vote">WARNING: You only get one vote per day, so use it wisely.</div>
+          <div className="vote-describe">
+            Vote on a topic you would like to discuss. The topic with the most
+            votes by midnight will become tomorrow's Topic of the Day!
+          </div>
+          <div className="one-vote">
+            WARNING: You only get one vote per day, so use it wisely.
+          </div>
         </div>
         {/* <div>
           {showForm && (
@@ -319,6 +347,23 @@ const TopicList = () => {
           <ul>
             {sortedTopics.length > 0 &&
               sortedTopics.map(
+                (topic) =>
+                  topic && (
+                    <Topic
+                      key={topic.id}
+                      topic={topic}
+                      onEdit={handleEditClick}
+                      // onDelete={handleDeleteTopic}
+                      onDelete={() => handleDeleteClick(topic)}
+                      onVote={handleVote}
+                      onUnvote={handleUnvote}
+                      userOwns={topic?.user_id === user?.id}
+                    />
+                  )
+              )}
+
+            {/* {sortedTopics.length > 0 &&
+              sortedTopics.map(
                 (
                   topic //console.log the topic here
                 ) => (
@@ -333,7 +378,7 @@ const TopicList = () => {
                     userOwns={topic?.user_id === user?.id}
                   />
                 )
-              )}
+              )} */}
           </ul>
 
           <ConfirmationModal

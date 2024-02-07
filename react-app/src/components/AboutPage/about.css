@@ -1,0 +1,58 @@
+/* about.css */
+
+.about-page-container {
+    text-align: center; /* Centers all text in the container */
+    max-width: 800px; /* Adjust as needed */
+    margin: auto; /* Centers the container itself */
+  }
+  
+  .developer-img img {
+    width: 250px; /* Adjust this size to your preference */
+    height: 250px; /* Keep this the same as width to maintain aspect ratio */
+    border-radius: 50%; /* This will make the image round */
+    margin: 20px 0; /* Adds space above and below the image */
+    object-fit: cover; /* Ensures the image covers the space without stretching */
+    display: block; /* Changes img from inline to block */
+    margin-left: auto; /* These two lines center the image */
+    margin-right: auto;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.6);
+  }
+  
+  .social-links img {
+    width: 40px; /* Adjust this size to your preference */
+    height: 40px; /* Keep this the same as width to maintain aspect ratio */
+    margin: 0 10px; /* Adds space between the logos */
+    vertical-align: middle; /* Aligns images if they are next to text or other elements */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Spinning animation */
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Apply the animation to image and logos on hover */
+  .developer-img img:hover, .social-links img:hover {
+    animation: spin 2s linear infinite; 
+    transform: translateY(-3px); /* Slight move up on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+    animation: pulse 1s infinite;
+  }
+  

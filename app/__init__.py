@@ -11,6 +11,7 @@ from .api.auth_routes import auth_routes
 from .seeds import seed_commands
 from .config import Config
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import func
 
 from .api.topic_routes import topic_routes
 from .api.comment_routes import comment_routes

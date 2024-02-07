@@ -52,6 +52,10 @@ const LandingPage = () => {
             <a href="/topics" className="topcs">
               Propose Your Own Topic
             </a>
+            <br />
+            <a href="/about" className="about-button">
+              About Philosophize
+            </a>
           </>
         ) : (
           <p>Loading topic...</p>

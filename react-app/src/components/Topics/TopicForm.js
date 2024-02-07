@@ -49,39 +49,32 @@ const TopicForm = ({ mode, existingTopic, onSubmit, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let hasErrors = false;
-
+    
+    const newErrors = [];
+    const topicId = existingTopic ? existingTopic.id : null; // Extract the ID
+  const topicData = { title, description }; // Form fields
+    if (newErrors.length === 0) {
+      onSubmit({ topicId, title, description });  // Pass topicId, title, and description to parent
+    }
+  
     // Title validation
     if (title.length < 10 || title.length > 250) {
-      setTitleError("Title must be between 10 and 250 characters");
-      hasErrors = true;
-    } else {
-      setTitleError("");
+      newErrors.push("Title must be between 10 and 250 characters");
     }
-
+  
     // Description validation
     if (description.length < 50 || description.length > 500) {
-      setDescriptionError("Description must be between 50 and 500 characters");
-      hasErrors = true;
-    } else {
-      setDescriptionError("");
+      newErrors.push("Description must be between 50 and 500 characters");
     }
-
-    if (
-      titleError ||
-      descriptionError ||
-      title.length === 0 ||
-      description.length === 0
-    ) {
-      // Handle the case when there are errors or fields are empty
-      return;
+  
+    setErrors(newErrors);
+  
+    if (newErrors.length === 0 && topicId !== null) {
+      onSubmit(topicId, topicData); // Pass topicId and topicData separately
     }
-
-    if (hasErrors) return;
-
-    const topicData = { title, description };
-    onSubmit(topicData);
   };
+
+
   return (
     <form onSubmit={handleSubmit} className="topic-form">
       <div className="form-group">

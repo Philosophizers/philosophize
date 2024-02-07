@@ -53,7 +53,11 @@ export const updateTopic = (topic) => ({
 });
 
 export const editTopic = (topicId, topicData) => async (dispatch) => {
-  const response = await fetch(`/api/topics/${topicId}`, {
+  const url = `/api/topics/${topicId}`;
+  console.log("Request URL for editing topic:", url);
+  console.log("Topic Data:", topicData);
+  console.log("Topic ID:", topicId);
+  const response = await fetch(url, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(topicData),
