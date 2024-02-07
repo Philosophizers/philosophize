@@ -12,6 +12,8 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import CreateTopicForm from './components/Topics/TopicForm'
 import TopicList from './components/Topics/TopicList' 
 import CommentsPage from "./components/CommentsPage/CommentsPage";
+import AboutPage from './components/AboutPage/AboutPage';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +44,9 @@ function App() {
           </Route>
           <Route path="/comments">
             <CommentsPage />
+          </Route>
+          <Route path="/about">
+            <AboutPage />
           </Route>
         </Switch>
       )}

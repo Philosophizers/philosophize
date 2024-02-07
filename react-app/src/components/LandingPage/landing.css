@@ -213,3 +213,30 @@ s steps(20, end) forwards, blinkCursor 0.7s step-end infinite;
 .see-all-comments:hover, .topcs:hover {
   animation: pulse 1s infinite;
 }
+
+.about-button {
+  display: inline-block;
+  justify-content: center;
+  font-family: 'Courier New', Courier, monospace;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 20px;
+  margin-bottom: 14px;
+  font-size: 20px;
+  color: #ffffff;
+  text-decoration: none;
+  opacity: 0.8;
+  background-color: rgb(174, 53, 108);
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.about-button:hover {
+  background-color: #2aa58c; /* Lighter red on hover */
+  transform: translateY(-3px); /* Slight move up on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+}
