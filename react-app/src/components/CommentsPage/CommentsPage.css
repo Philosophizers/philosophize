@@ -6,7 +6,7 @@
   }
   
   .comment-section {
-    background: rgba(252, 103, 150, 0.7); /* Light pink background for the comment bubble */
+    background: #fc6796; /* Light pink background for the comment bubble */
     background: linear-gradient(45deg, #fc6796, #ff8c7b); /* Gradient background */ 
     border-radius: 25px; /* Rounded corners for the bubble */
     padding: 2rem;
@@ -66,7 +66,7 @@
   }
   
   .new-comment-form {
-  background: #ba97e4; 
+  background: rgb(104, 220, 255, 0.4); 
   border-radius: 25px; 
   padding: 1rem;
   margin-top: 2rem; 
@@ -81,8 +81,9 @@
   .new-comment-form label {
   display: block; 
   margin-bottom: 0.5rem;
-  color: white;
+  color: rgb(154, 79, 203);
   text-align: center;
+  box-shadow: #0056b3;
   }
   
   .new-comment-form textarea {
@@ -202,12 +203,13 @@
 .new-comment-form textarea {
     z-index: 10; /* Higher z-index to ensure it's above the image */
     /* Other styles */
+
 }
 
 /* You can also add a background to the text areas to improve visibility */
 .comment-edit-textarea,
 .new-comment-form textarea {
-    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    background: rgba(255, 255, 255, 0.6); /* Semi-transparent white background */
 }
 
 /* Adjust the z-index for the entire container of the comment including actions */
