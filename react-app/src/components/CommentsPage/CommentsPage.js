@@ -223,7 +223,7 @@ comment"
           {user ? (
             <form onSubmit={handleSubmit} className="new-comment-form">
               <div>
-                <label htmlFor="new-comment">New Comment</label>
+                <label htmlFor="new-comment">Join the Discussion!</label>
                 <textarea
                   id="new-comment"
                   value={content}
@@ -231,7 +231,7 @@ comment"
                 />
                 {contentError && <p className="error">{contentError}</p>}
               </div>
-              <button type="submit">add a comment</button>
+              <button type="submit">Add Comment</button>
             </form>
           ) : (
             <button onClick={handleLoginRedirect} className="login-to-comment">

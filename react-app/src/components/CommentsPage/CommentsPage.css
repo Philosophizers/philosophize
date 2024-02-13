@@ -79,11 +79,20 @@
   
   
   .new-comment-form label {
-  display: block; 
+  display: block;
+  font-size: 1.5rem;
+
   margin-bottom: 0.5rem;
   color: rgb(154, 79, 203);
   text-align: center;
   box-shadow: #0056b3;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  text-shadow:
+    -0.7px -0.7px 0 #e0cfcf,
+    0.7px -0.7px 0 #ffffff,
+    -0.7px 0.7px 0 #ffffff,
+    0.7px 0.7px 0 #ffffff;
   }
   
   .new-comment-form textarea {
@@ -111,6 +120,7 @@
   margin-top: 1rem; 
   cursor: pointer;
   transition: background-color 0.3s ease; 
+  font-size: 1.5rem;
   }
   
   .new-comment-form button:hover {
