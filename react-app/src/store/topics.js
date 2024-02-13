@@ -54,9 +54,7 @@ export const updateTopic = (topic) => ({
 
 export const editTopic = (topicId, topicData) => async (dispatch) => {
   const url = `/api/topics/${topicId}`;
-  console.log("Request URL for editing topic:", url);
-  console.log("Topic Data:", topicData);
-  console.log("Topic ID:", topicId);
+
   const response = await fetch(url, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -212,7 +210,6 @@ export const castVote = (topicId) => async (dispatch) => {
 
   if (response.ok) {
     const updatedTopic = await response.json();
-    console.log("Updated Topic:", updatedTopic); // Log to check the updated topic
     dispatch(voteForTopic(updatedTopic));
     dispatch(checkUserVote());
   } else {
@@ -383,17 +380,14 @@ export default function topicsReducer(state = initialState, action) {
     //   };
     case VOTE_FOR_TOPIC:
       console.log("Action:", action);
-      console.log("Current State:", state); // Log current state
       const newTopic = {
         ...state[action.topic.id],
         ...action.topic,
       };
-      console.log("ne topic", newTopic);
       const updatedState = {
         ...state,
         [action.topic.id]: newTopic,
       };
-      console.log("Updated State:", updatedState); // Log updated state
       return updatedState;
 
       case USER_HAS_VOTED:

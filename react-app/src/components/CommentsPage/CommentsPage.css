@@ -6,7 +6,8 @@
   }
   
   .comment-section {
-    background: #fc6796; /* Light pink background for the comment bubble */
+    background: rgba(252, 103, 150, 0.7); /* Light pink background for the comment bubble */
+    background: linear-gradient(45deg, #fc6796, #ff8c7b); /* Gradient background */ 
     border-radius: 25px; /* Rounded corners for the bubble */
     padding: 2rem;
     margin-top: 2rem; /* Add space above the comment bubble */
@@ -28,7 +29,7 @@
     border-radius: 15px; /* Slightly rounded corners for the comments */
     border-width: 500px;
     padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Soft shadow for depth */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.7); /* Soft shadow for depth */
   }
   
   .comment-topic {
@@ -61,7 +62,7 @@
   
   .comment-actions button:disabled {
     background: #ccc;;
-  cursor: not-allowed;  
+    cursor: not-allowed;  
   }
   
   .new-comment-form {
@@ -69,9 +70,10 @@
   border-radius: 25px; 
   padding: 1rem;
   margin-top: 2rem; 
-  width: 50%;
-  
-
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 10px;
+  z-index: 3;
   }
 
   
@@ -182,3 +184,55 @@
       display: none; /* Hide the image on smaller screens */
     }
   }
+
+  .comment-section {
+    /* Existing styles */
+    position: relative; /* Ensure this is set to relative */
+}
+
+.comment-image {
+    /* Existing styles */
+
+    z-index: -1; /* Set image behind the input fields */
+}
+
+/* Ensure the z-index for inputs and textarea is higher than the image */
+.comment input[type="text"],
+.comment-edit-textarea,
+.new-comment-form textarea {
+    z-index: 10; /* Higher z-index to ensure it's above the image */
+    /* Other styles */
+}
+
+/* You can also add a background to the text areas to improve visibility */
+.comment-edit-textarea,
+.new-comment-form textarea {
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+}
+
+/* Adjust the z-index for the entire container of the comment including actions */
+.comment {
+    z-index: 2; /* Above the thinker image */
+    position: relative; /* Needed because of changing z-index */
+}
+
+
+.comment {
+  /* Existing styles */
+  word-wrap: break-word; /* This will ensure text wraps within the bubble */
+  overflow-wrap: break-word; /* Use this for better support in some browsers */
+  max-width: 100%; /* Ensure the comment doesn't exceed the width of its container */
+}
+
+.comment-content {
+  /* Existing styles */
+  word-wrap: break-word; /* This will ensure text wraps within the bubble */
+  overflow-wrap: break-word; /* Use this for better support in some browsers */
+}
+
+/* Ensure that the new comment form has a higher z-index and is positioned relatively */
+.new-comment-form {
+  /* Existing styles */
+  z-index: 10; /* Higher z-index to ensure it's above the image */
+  position: relative; /* Add relative positioning */
+}

@@ -8,6 +8,24 @@
     
   }
 
+  .landing-topic, .landing-describe {
+    background-color: rgba(255, 255, 255, 0.8); /* Adjust opacity as needed */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: #333; /* Dark text for contrast */
+    padding: 10px; /* Padding around text */
+    border-radius: 8px; /* Optional: rounded corners for the background */
+    display: inline-block;
+    margin: 0 auto; /* Centering the block elements */
+    width: fit-content; /* Adjust width to fit the content */
+  }
+  
+  /* For the comments, if they are also hard to read, you can add a similar style */
+  .comment {
+    background-color: rgba(255, 255, 255, 0.8); /* Adjust opacity as needed */
+    color: #333; /* Assuming you want dark text here as well */
+    /* Rest of your styles */
+  }
+
 
   @keyframes typing {
     from { width: 0; white-space: nowrap;}
@@ -100,7 +118,12 @@ s steps(20, end) forwards, blinkCursor 0.7s step-end infinite;
 .comment {
   /* Define a linear gradient background with your choice of colors */
   margin-top: 10px;
-  background: linear-gradient(-45deg, #3d6438, #1daf86, #0097b9, #bd007b);
+  background: linear-gradient(-45deg, 
+  rgba(61, 100, 56, 0.7), 
+  rgba(29, 175, 134, 0.7), 
+  rgba(0, 151, 185, 0.7), 
+  rgba(189, 0, 123, 0.7), 
+  rgba(61, 100, 56, 0.7));
   background-size: 400% 400%;
   color: white;
   border-radius: 15px;
@@ -117,7 +140,7 @@ s steps(20, end) forwards, blinkCursor 0.7s step-end infinite;
     padding: 30px;
     border-radius: 5px;
     max-width: calc(49.333% - 20px); 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.7); 
   }
   
   .comment-username {
