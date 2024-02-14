@@ -159,3 +159,31 @@ a :hover {
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
   cursor: pointer;
 }
+
+
+.subhead-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 55px;
+  margin-bottom: 20px;
+  font-family: 'Courier New', Courier, monospace;
+} 
+
+.subhead-nav a {
+  color: #000000;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 25px;
+  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.8s, transform 0.3s;
+} 
+
+.subhead-nav a:hover {
+  background-color: #2aa58c; /* Lighter red on hover */
+  transform: translateY(3px); /* Slight move up on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+  cursor: pointer;
+  color: white;
+} 

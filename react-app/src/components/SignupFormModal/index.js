@@ -54,6 +54,21 @@ function SignupFormModal() {
       }),
     });
 
+    const checkUnique = await fetch('/api/auth/validate-unique', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, email }),
+    });
+  
+    if (!checkUnique.ok) {
+      const uniqueErrors = await checkUnique.json();
+      setErrors(prev => ({ ...prev, ...uniqueErrors }));
+      return;
+    }
+
+
     const data = await response.json();
     if (!response.ok) {
       // Assuming the server responds with a status code of 400 or similar on error
@@ -66,9 +81,13 @@ function SignupFormModal() {
     if (!username) errorList.username = "Username is required";
     if (!email || !email.includes("@"))
       errorList.email = "Valid email is required";
-    if (!password || password.length<6) errorList.password = "Valid Password is required";
+    if (!password || password.length<6) errorList.password = "Password must be at least 6 characters";
+    if (!confirmPassword) errorList.confirmPassword = "Confirm Password is required";
+    if (!isEmail(email)) errorList.email = "Valid email is required";
+    if (password.length < 6) errorList.password = "Password must be at least 6 characters";
     if (password !== confirmPassword)
       errorList.confirmPassword = "Passwords must match";
+    if (!checkUnique.username.ok) errorList.username = "Username is already taken";
 
     if (Object.values(errorList).length > 0) {
       setErrors(errorList);

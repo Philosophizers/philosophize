@@ -104,7 +104,9 @@ export const createComment = (topicId, commentData) => async (dispatch) => {
   });
 
   if (response.ok) {
-    console.log('comment created', response)
+    const newComment = await response.json();
+    dispatch(addComment(newComment));
+    return newComment;
   } else {
     const errors = await response.json();
     return errors;
@@ -172,7 +174,6 @@ export const userHasVotedStatus = (hasVoted) => ({
 
 // Thunk for fetching comments of the topic of the day
 export const fetchCommentsForTopic = (topicId) => async (dispatch) => {
-  console.log('fetchCommentsForTopic', topicId)
   const response = await fetch(`/api/comments/${topicId}`);
   if (response.ok) {
     const comments = await response.json();
@@ -231,7 +232,6 @@ export const checkUserVote = () => async (dispatch) => {
     if (response.ok) {
       const data = await response.json();
       const hasVoted = data.has_voted;
-      console.log('Has the user voted?', hasVoted);
       dispatch(userHasVotedStatus(hasVoted));
     } else {
       const errorData = await response.json();
@@ -379,7 +379,6 @@ export default function topicsReducer(state = initialState, action) {
     //     }
     //   };
     case VOTE_FOR_TOPIC:
-      console.log("Action:", action);
       const newTopic = {
         ...state[action.topic.id],
         ...action.topic,

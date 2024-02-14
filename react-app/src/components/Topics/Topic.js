@@ -4,9 +4,9 @@ import { checkUserVote } from "../../store/topics";
 import "./topic.css";
 
 function Topic({ topic, onEdit, onSaveEdit, onCancelEdit, onDelete, onVote, onUnvote, userOwns }) {
-  console.log("topic", topic);
+
   const user = useSelector((state) => state.session.user);
-  console.log("user", user);
+
   const hasVoted = useSelector((state) => state?.topics?.hasVoted);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -34,7 +34,6 @@ function Topic({ topic, onEdit, onSaveEdit, onCancelEdit, onDelete, onVote, onUn
   const createdAt = new Date(topic?.created_at)?.toLocaleString();
   const updatedAt = new Date(topic?.updated_at)?.toLocaleString();
   const voteCount = topic?.vote_count || 0;
-  // console.log(`Rendering topic ${topic.id} with vote count:`, voteCount);
   const voted = topic?.votes?.some((vote) => vote?.user_id === user?.id);
 
   return (

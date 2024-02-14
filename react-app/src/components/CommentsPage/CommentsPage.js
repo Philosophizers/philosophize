@@ -65,7 +65,6 @@ const CommentsPage = () => {
     const commentData = { content };
     try {
       const res = await dispatch(createComment(topicOfTheDay.id, commentData));
-      console.log("res", res);
       setContent("");
       dispatch(fetchCommentsForTopic(topicOfTheDay.id));
     } catch (error) {

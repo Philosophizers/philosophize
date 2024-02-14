@@ -32,10 +32,12 @@ const handleSubmit = async (e) => {
 
   if (!username || username.length < 3)
     errorList.username = "Username must be at least 3 characters long";
-  if (!email || !email.includes("@"))
+  if (!email || !email.includes("@") || !email.includes("."))
     errorList.email = "Valid email is required";
   if (!password || password.length < 6)
-    errorList.password = "Valid Password is required";
+    errorList.password = "Password must be at least 6 characters long";
+  if (!confirmPassword)
+    errorList.confirmPassword = "Please confirm your password";
   if (password !== confirmPassword)
     errorList.confirmPassword = "Passwords must match";
 
