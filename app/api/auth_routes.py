@@ -80,3 +80,20 @@ def unauthorized():
     Returns unauthorized JSON when flask-login authentication fails
     """
     return {'errors': ['Unauthorized']}, 401
+
+@auth_routes.route('/validate-unique', methods=['POST'])
+def validate_unique():
+    data = request.get_json()
+    email = data.get('email')
+    username = data.get('username')
+    errors = {}
+
+    email_exists = User.query.filter(User.email == email).first()
+    if email_exists:
+        errors['email'] = 'Email address already exists.'
+
+    username_exists = User.query.filter(User.username == username).first()
+    if username_exists:
+        errors['username'] = 'Username already exists.'
+
+    return jsonify(errors)

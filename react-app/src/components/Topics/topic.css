@@ -14,7 +14,6 @@
     background: white;
     padding: 20px;
     border-radius: 5px;
-    /* Add more styles as needed */
   }
   
 
@@ -41,6 +40,15 @@
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }
+
+  .toptop {
+    margin-bottom: 1rem;
+    background: linear-gradient(35deg, #fc6796, #955286, #8f7087, #d499de);
+    border-radius: 40px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+  }
   
   /* Style the topic form to match the new comment form */
   .topic-form {
@@ -49,6 +57,15 @@
     padding: 1rem;
     margin-top: 2rem;
   }
+  .topic-list-container {
+    /* Other styles */
+    margin: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* This centers children horizontally in the container */
+  }
+  
+
 
   .topic-list-container {
   max-width: 1200px;
@@ -485,7 +502,6 @@ background: #f44336; /* A red color to indicate cancel/close actions */
 
 textarea.form-control {
   height: 100px; /* Or as much as you need */
-  /* Rest of the styles remain the same */
 }
 
 .vote-describe{
@@ -506,4 +522,18 @@ margin-top: 14px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: rgb(33, 164, 13);
     
+  }
+
+  
+
+  
+
+  
+
+  .toptoptop {
+    margin-bottom: 1rem;
+    background: linear-gradient(35deg, #fc6796, #955286, #8f7087, #d499de);
+    border-radius: 40px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }

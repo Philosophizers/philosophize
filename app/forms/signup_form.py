@@ -33,3 +33,13 @@ class SignUpForm(FlaskForm):
 
 
 
+# # In your signup_form.py or wherever the form is defined
+# from wtforms.validators import DataRequired, Length, Regexp
+
+# class SignUpForm(FlaskForm):
+#     # Other fields...
+#     password = StringField('password', validators=[
+#         DataRequired(message="Password is required"),
+#         Length(min=6, message="Password must be at least 6 characters"),
+#         Regexp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])', message="Password must contain a number, a lowercase and an uppercase letter")
+#     ])

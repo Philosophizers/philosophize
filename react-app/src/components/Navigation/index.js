@@ -8,22 +8,6 @@ import './Navigation.css';
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 
-// 	return (
-// 		<ul>
-// 			<li>
-// 				<NavLink exact to="/" classname="homeImage"><img src={thinkerImage} alt="Thinker" /></NavLink>
-// 			</li>
-// 			{isLoaded && (
-// 				<li>
-// 					<ProfileButton user={sessionUser} />
-// 				</li>
-// 			)}
-
-// <NavLink exact to="/" className='brand'>P H I L O S O P H I Z E</NavLink>
-// 		</ul>
-// 	);
-// }
-
 return (
 	<header>
     <ul className='navul'>
@@ -33,6 +17,11 @@ return (
             </NavLink>
         </li>
         <li className="brand-text">P H I L O S O P H I Z E</li>
+        <nav class="subhead-nav">
+    <NavLink to="/topics" className="navlink">topics</NavLink>
+    <NavLink to="/comments" className="navlink">comments</NavLink>
+    <NavLink to="/about" className="navlink">about us</NavLink>
+  </nav>
         {isLoaded && (
             <li className="profile-button">
                 <ProfileButton user={sessionUser} />

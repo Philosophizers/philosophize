@@ -47,20 +47,6 @@ const TopicList = () => {
     dispatch(fetchTopics()).catch(console.error);
   }, [dispatch]);
 
-  // const handleCreateTopic = async (topicData) => {
-  //   try {
-  //     const res = await dispatch(createTopic(topicData));
-  //     if (!res.errors) {
-  //       setShowForm(false);
-  //       dispatch(fetchTopics());
-  //     } else {
-  //       console.error("Failed to create topic:", res.errors);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error creating topic:", error);
-  //   }
-  // };
-
   const handleLoginRedirect = () => {
     history.push("/login"); // Redirect to login page
   };
@@ -88,23 +74,6 @@ const TopicList = () => {
     setEditingTopic(null);
   };
 
-  //need to push newest topic to top of list
-
-  // const handleEditTopic = async (topicData) => {
-  //   try {
-  //     const res = await dispatch(editTopic(editingTopic.id, topicData));
-  //     if (!res.errors) {
-  //       setShowForm(false);
-  //       setEditingTopic(null);
-  //       dispatch(fetchTopics());
-  //     } else {
-  //       console.error("Failed to update topic:", res.errors);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating topic:", error);
-  //   }
-  // };
-
   const handleEditTopic = async (topicId, topicData) => {
     try {
       const res = await dispatch(editTopic(topicId, topicData));
@@ -116,23 +85,8 @@ const TopicList = () => {
       }
     } catch (error) {
       console.error("Error updating topic:", error);
-      console.log("Received response:", error.response);
     }
   };
-  
-  
-
-  // you can do this without having to dispathc fetchTopics again
-
-  // const handleDeleteTopic = async (topicId) => {
-  //     try {
-  //         const response = await fetch(`/api/topics/${topicId}`, { method: 'DELETE' });
-  //         if (!response.ok) throw new Error('Network response was not ok');
-  //         dispatch(removeTopic(topicId));
-  //     } catch (error) {
-  //         console.error('Error deleting topic:', error);
-  //     }
-  // };
 
   const handleDeleteClick = (topic) => {
     // Save the topic to delete and show confirmation modal
@@ -167,25 +121,9 @@ const TopicList = () => {
     }
   };
 
-  // const handleEditClick = (topic) => {
-  //   setEditingTopic(topic);
-  //   setShowForm(true);
-  // };
   const handleEditClick = (topic) => {
-    console.log("Editing topic with ID:", topic.id);  // Ensure this logs the correct ID
     openModal("edit", topic);
   };
-
-  // const handleTopicSubmit = ({ topicId, title, description }) => {
-  //   if (topicId) {
-  //     // If topicId is present, it's an edit action
-  //     dispatch(editTopic(topicId, { title, description }));
-  //   } else {
-  //     // Handle create topic action
-  //   }
-  // };
-  
-  
 
   const handleVote = (topicId) => {
     if (!user) {
@@ -199,15 +137,6 @@ const TopicList = () => {
     dispatch(removeVote(topicId));
   };
 
-  // const handleSaveEdit = async (topicId, topicData) => {
-  //   // Call the API to save the edited topic, then reset the editing state
-  //   const res = await dispatch(editTopic(topicId, topicData));
-  //   if (!res.errors) {
-  //     setEditingTopic(null); // Exit editing mode
-  //   } else {
-  //     console.error("Failed to update topic:", res.errors);
-  //   }
-  // };
 
   const handleCancelEdit = () => {
     setEditingTopic(null); // Exit editing mode without saving
@@ -233,67 +162,11 @@ const TopicList = () => {
     setEditingTopic(null); // Reset editing topic
   };
 
-  // return (
-  //   <>
-  //     <div>
-  //       <div>
-  //         <h1>Topics</h1>
-  //         <button
-  //           onClick={() => {
-  //             setShowForm(true);
-  //             setEditingTopic(null); // Reset editing topic
-  //           }}
-  //         >
-  //           Create New Topic
-  //         </button>
-  //       </div>
-  //       <div>
-  //         {showForm && (
-  //           <TopicForm
-  //             existingTopic={editingTopic}
-  //             onSubmit={editingTopic ? handleEditTopic : handleCreateTopic}
-  //             onCancel={() => {
-  //               setShowForm(false);
-  //               setEditingTopic(null);
-  //             }}
-  //           />
-  //         )}
-  //       </div>
-
-  //       <div>
-  //         <ul>
-  //           {topics &&
-  //             topics.length > 0 &&
-  //             topics.map((topic) => (
-  //               <Topic
-  //                 key={topic ? topic.id : undefined}
-  //                 topic={topic}
-  //                 onEdit={handleEditClick}
-  //                 onDelete={handleDeleteTopic}
-  //                 onVote={handleVote}
-  //                 onUnvote={handleUnvote}
-  //                 userOwns={topic?.user_id === user?.id}
-  //               />
-  //             ))}
-  //         </ul>
-  //       </div>
-  //     </div>
-  //   </>
-  // );
-
   return (
     <>
       <div>
         <div className="topic-list-container">
           <h1 className="woow">Topics</h1>
-          {/* <button
-            onClick={() => {
-              setShowForm(true);
-              setEditingTopic(null); // Reset editing topic
-            }}
-          >
-            Create New Topic
-          </button> */}
           {user ? (
             // If user is logged in, show 'Create New Topic' button
             <button
@@ -319,18 +192,6 @@ const TopicList = () => {
             WARNING: You only get one vote per day, so use it wisely.
           </div>
         </div>
-        {/* <div>
-          {showForm && (
-            <TopicForm
-              existingTopic={editingTopic}
-              onSubmit={editingTopic ? handleEditTopic : handleCreateTopic}
-              onCancel={() => {
-                setShowForm(false);
-                setEditingTopic(null);
-              }}
-            />
-          )}
-        </div> */}
 
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <TopicForm
@@ -343,8 +204,8 @@ const TopicList = () => {
           />
         </Modal>
 
-        <div>
-          <ul>
+        <div className="toptop">
+          <ul className = "toptoptop">
             {sortedTopics.length > 0 &&
               sortedTopics.map(
                 (topic) =>
@@ -361,31 +222,12 @@ const TopicList = () => {
                     />
                   )
               )}
-
-            {/* {sortedTopics.length > 0 &&
-              sortedTopics.map(
-                (
-                  topic //console.log the topic here
-                ) => (
-                  <Topic
-                    key={topic ? topic.id : undefined}
-                    topic={topic}
-                    onEdit={handleEditClick}
-                    // onDelete={handleDeleteTopic}
-                    onDelete={() => handleDeleteClick(topic)}
-                    onVote={handleVote}
-                    onUnvote={handleUnvote}
-                    userOwns={topic?.user_id === user?.id}
-                  />
-                )
-              )} */}
           </ul>
 
           <ConfirmationModal
             isOpen={showDeleteConfirmation}
             onClose={closeDeleteConfirmation}
-            onConfirm={confirmDelete}
-          >
+            onConfirm={confirmDelete}>
             Are you sure you want to delete your topic proposal?
           </ConfirmationModal>
         </div>
