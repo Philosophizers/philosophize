@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import {
   fetchTopicOfTheDay,
@@ -16,6 +16,7 @@ import "./CommentsPage.css";
 const CommentsPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   const topicOfTheDay = useSelector((state) => state.topics.topicOfTheDay);
   const comments = useSelector((state) => Object.values(state.topics.comments));
   const [content, setContent] = useState("");
@@ -53,7 +54,7 @@ const CommentsPage = () => {
   }, [content]);
 
   const handleLoginRedirect = () => {
-    history.push("/login");
+    history.push("/login", { from: location });
   };
 
   const handleSubmit = async (e) => {

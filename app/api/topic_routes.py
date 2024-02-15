@@ -42,15 +42,40 @@ def update_topic(id):
         return jsonify(topic.to_dict())
     return jsonify({'message': 'Permission denied'}), 403
 
+# @topic_routes.route('/<int:id>', methods=['DELETE'])
+# @login_required
+# def delete_topic(id):
+#     topic = Topic.query.get(id)
+#     if topic and topic.user_id == current_user.id:
+#         db.session.delete(topic)
+#         db.session.commit()
+#         return jsonify({'message': 'Topic deleted'}), 204
+#     return jsonify({'message': 'Permission denied'}), 403
+
 @topic_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_topic(id):
     topic = Topic.query.get(id)
     if topic and topic.user_id == current_user.id:
+        # Fetch all votes associated with this topic
+        votes = Vote.query.filter_by(topic_id=id).all()
+
+        # Delete all votes associated with this topic
+        for vote in votes:
+            db.session.delete(vote)
+
+        # Commit the changes to delete the votes
+        db.session.commit()
+
+        # Now, delete the topic itself
         db.session.delete(topic)
         db.session.commit()
-        return jsonify({'message': 'Topic deleted'}), 204
-    return jsonify({'message': 'Permission denied'}), 403
+
+        return jsonify({'message': 'Topic and associated votes deleted'}), 204
+    else:
+        return jsonify({'message': 'Permission denied'}), 403
+
+
 
 
 @topic_routes.route('/topic-of-the-day', methods=['GET'])

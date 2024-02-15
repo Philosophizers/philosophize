@@ -9,7 +9,6 @@
   }
 
   .landing-topic, .landing-describe {
-    background-color: rgba(255, 255, 255, 0.8); /* Adjust opacity as needed */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     color: #333; /* Dark text for contrast */
     padding: 10px; /* Padding around text */
@@ -18,8 +17,10 @@
     margin: 0 auto; /* Centering the block elements */
     width: fit-content; /* Adjust width to fit the content */
   }
+
+  .landing-describe {
+    background-color: rgba(255, 255, 255, 0.8); /* Adjust opacity */}
   
-  /* For the comments, if they are also hard to read, you can add a similar style */
   .comment {
     background-color: rgba(255, 255, 255, 0.8); /* Adjust opacity as needed */
     color: #333; /* Assuming you want dark text here as well */
@@ -46,14 +47,13 @@
     text-align: center;
     box-sizing: border-box;
     width: 100%;
-    animation: typing 3s steps(30, end) forwards, blinkCursor 0.96s step-end infinite;
+    animation: typing 1.5s steps(30, end) forwards, blinkCursor 0.96s step-end infinite;
   }
 
   @media (max-width: 768px) {
 .landing-topic {
 font-size: 30px;
-animation: typing 2
-s steps(20, end) forwards, blinkCursor 0.7s step-end infinite;
+animation: typing 2s steps(20, end) forwards, blinkCursor 0.2s step-end infinite;
 }}
 
 
@@ -65,7 +65,6 @@ s steps(20, end) forwards, blinkCursor 0.7s step-end infinite;
   
     margin-bottom: 1.4rem;
     text-align: center;
- /* Adjust timing as needed */
   }
   
   .pillar {
