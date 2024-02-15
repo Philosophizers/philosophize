@@ -36,16 +36,6 @@ export const fetchTopics = () => async (dispatch) => {
   }
 };
 
-// export const fetchTopics = () => async (dispatch) => {
-//   const response = await fetch("/api/topics");
-//   if (response.ok) {
-//     let topics = await response.json();
-//     // Assuming each topic has a 'created_at' field
-//     topics = topics.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-//     dispatch(getTopics(topics));
-//   }
-// };
-
 
 export const updateTopic = (topic) => ({
   type: UPDATE_TOPIC,
@@ -342,10 +332,17 @@ export default function topicsReducer(state = initialState, action) {
         ...state,
         [action.topic.id]: action.topic,
       };
+
+//----------------------------------------------------------------------------------------
     case REMOVE_TOPIC:
       const newState = { ...state };
       delete newState[action.topicId];
       return newState;
+    
+//----------------------------------------------------------------------------------------
+
+
+
     case SET_TOPIC_OF_THE_DAY:
       return { ...state, topicOfTheDay: action.topic };
     case GET_COMMENTS:
@@ -356,28 +353,7 @@ export default function topicsReducer(state = initialState, action) {
         ...state,
         comments: { ...state.comments, [action.comment.id]: action.comment },
       };
-    //     case VOTE_FOR_TOPIC:
-    //   return {
-    //     ...state,
-    //     topics: {
-    //       ...state.topics,
-    //       [action.topicId]: {
-    //         ...state.topics[action.topicId],
-    //         hasVoted: true
-    //       }
-    //     }
-    //   };
-    // case UNVOTE_FOR_TOPIC:
-    //   return {
-    //     ...state,
-    //     topics: {
-    //       ...state.topics,
-    //       [action.topicId]: {
-    //         ...state.topics[action.topicId],
-    //         hasVoted: false
-    //       }
-    //     }
-    //   };
+
     case VOTE_FOR_TOPIC:
       const newTopic = {
         ...state[action.topic.id],
