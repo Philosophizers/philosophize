@@ -2,7 +2,7 @@
 
 [Philosophize](https://philosophize.onrender.com/) is a Philosophical Debate Platform.
 
-##About Philosophize
+## About Philosophize
 
 The idea began as a conscious effort to counteract doomscrolling and the mass consumption of content on most social media websites. There are intentional limitations as each day there is only one central topic to discuss and users only get one vote and one comment. The goal is to enter, gain some insight, provide your opinions if you like, then close the site for the rest of the day and come back tomorrow if you would like.
 
