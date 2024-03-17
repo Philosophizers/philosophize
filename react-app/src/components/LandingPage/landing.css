@@ -51,10 +51,10 @@
   }
 
   @media (max-width: 768px) {
-.landing-topic {
-font-size: 30px;
-animation: typing 2s steps(20, end) forwards, blinkCursor 0.2s step-end infinite;
-}}
+  .landing-topic {
+  font-size: 30px;
+  animation: typing 2s steps(20, end) forwards, blinkCursor 0.2s step-end infinite;
+  }}
 
 
 
@@ -72,6 +72,7 @@ animation: typing 2s steps(20, end) forwards, blinkCursor 0.2s step-end infinite
     bottom: 0; 
     top: 60px; 
     z-index: -1;
+    
   }
   
   .left-pillar {
