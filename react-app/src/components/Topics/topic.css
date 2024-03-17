@@ -377,7 +377,7 @@ margin-bottom: 0.5rem; /* Add spacing between stacked buttons */
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* Dim the background */
+  background-color: rgba(182, 138, 138, 0.5); /* Dim the background */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -389,7 +389,7 @@ margin-bottom: 0.5rem; /* Add spacing between stacked buttons */
   padding: 2rem;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  width: auto;
+  width: 1000px;
   z-index: 1051;
   padding: 2rem;
   width: 50%; /* Or a fixed size like 600px depending on your preference */
@@ -406,6 +406,12 @@ margin-bottom: 0.5rem; /* Add spacing between stacked buttons */
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+.modal-close-button:hover {
+  color: #d32f2f; /* A red color on hover */
+  cursor: pointer;
+  background-color: #000;
 }
 
 .modal-confirm-buttons {
