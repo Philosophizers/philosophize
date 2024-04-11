@@ -4,6 +4,7 @@ import './about.css';
 import linkedInLogo from './LinkedIn_logo_initials.png'; 
 import githubLogo from './githublogopng.png'; 
 import yoseph from './yosimg.jpeg';
+import yoslogo from './yoslogosamp1.webp'
 
 const AboutPage = () => {
   return (
@@ -29,6 +30,9 @@ const AboutPage = () => {
         <a href="https://www.linkedin.com/in/yoseph-latif/" target="_blank" rel="noopener noreferrer">
           <img src={linkedInLogo} alt="LinkedIn" />
         </a>
+        <a href="https://yosfolio.vercel.app/" target="_blank" rel="noopener noreferrer">
+          <img src={yoslogo} alt="Yosfolio" />
+          </a>
         <a href="https://github.com/yoslatif" target="_blank" rel="noopener noreferrer">
           <img src={githubLogo} alt="GitHub" />
         </a>
