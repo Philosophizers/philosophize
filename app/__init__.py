@@ -174,3 +174,101 @@ def not_found(e):
 
 
 app.cli.add_command(seed_commands)
+
+
+
+
+# import os
+# from flask import Flask, request, redirect, session
+# from flask_sqlalchemy import SQLAlchemy
+# from flask_migrate import Migrate
+# from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+# from flask_cors import CORS
+# from flask_wtf.csrf import CSRFProtect, generate_csrf
+# from flask_apscheduler import APScheduler
+# import zoneinfo
+# from datetime import datetime
+# from .seeds import seed_commands
+
+# # Your additional imports here
+# from .models import db, User, Topic, Vote
+# from .api.user_routes import user_routes
+# from .api.auth_routes import auth_routes
+# from .config import Config
+# # And other imports as required by your application structure
+
+
+# app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
+
+# # Application Configuration
+# app.config.from_object(Config)  # Ensure Config is properly defined in your app
+
+# # # Tell flask about our seed commands
+# app.cli.add_command(seed_commands)
+
+# # Database Initialization
+# db = SQLAlchemy(app)
+# Migrate(app, db)
+
+# # Login Manager Setup
+# login_manager = LoginManager(app)
+# login_manager.login_view = 'auth.unauthorized'
+
+# @login_manager.user_loader
+# def load_user(user_id):
+#     # Replace User with your User model
+#     return User.query.get(int(user_id))
+
+# # Application Security
+# CORS(app, supports_credentials=True)
+
+# # CSRF Protection
+# CSRFProtect(app)
+
+# # Blueprints Registration
+# # Register your blueprints here
+# # app.register_blueprint(auth_routes, url_prefix='/api/auth')
+# # And so on for other blueprints
+
+# # APScheduler Setup
+# scheduler = APScheduler()
+
+# def select_topic_of_the_day():
+#     # Place your job's logic here
+#     print("Selecting the topic of the day...")
+
+# # Ensure Scheduler starts only once and in production mode
+# if not app.debug or os.environ.get('FLASK_ENV') == 'production':
+#     if not scheduler.running:
+#         scheduler.init_app(app)
+#         scheduler.start()
+
+#         # Example job. Adjust according to your needs.
+#         scheduler.add_job(id='select_topic_of_the_day', func=select_topic_of_the_day, 
+#                           trigger='cron', hour=23, minute=59, 
+#                           timezone=zoneinfo.ZoneInfo("America/New_York"))
+
+# # HTTPS Redirection in Production
+# @app.before_request
+# def https_redirect():
+#     if os.environ.get('FLASK_ENV') == 'production' and request.headers.get('X-Forwarded-Proto') == 'http':
+#         url = request.url.replace('http://', 'https://', 1)
+#         return redirect(url, code=301)
+
+# @app.after_request
+# def inject_csrf_token(response):
+#     response.set_cookie('csrf_token', generate_csrf(), secure=True if os.environ.get('FLASK_ENV') == 'production' else False, samesite='Strict' if os.environ.get('FLASK_ENV') == 'production' else None, httponly=True)
+#     return response
+
+# # Additional Routes
+# @app.route('/')
+# def index():
+#     return "Hello, Flask!"
+
+# # Add other routes and error handlers as needed
+
+# if __name__ == "__main__":
+#     app.run(port=5005)
+
+
+# app.cli.add_command(seed_commands)
