@@ -21,10 +21,10 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page-container">
-      <div className="pillar left-pillar">
+      {/* <div className="pillar left-pillar"> */}
         {/* Pillar image here */}
-        <img src={pillarImage} alt="Pillar" />
-      </div>
+        {/* <img src={pillarImage} alt="Pillar" />
+      </div> */}
       <div className="topic-of-the-day-container">
         <h3>today's discussion:</h3>
         {topicOfTheDay ? (
@@ -61,10 +61,10 @@ const LandingPage = () => {
           <p>Loading topic...</p>
         )}
       </div>
-      <div className="pillar right-pillar">
+      {/* <div className="pillar right-pillar"> */}
         {/* Pillar image here */}
-        <img src={pillarImage} alt="Pillar" />
-      </div>
+        {/* <img src={pillarImage} alt="Pillar" />
+      </div> */}
     </div>
   );
 };

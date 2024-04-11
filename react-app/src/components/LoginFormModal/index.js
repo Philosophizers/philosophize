@@ -39,10 +39,6 @@ function LoginFormModal() {
     if (data) {
       setErrors(data);
     }
-    // else {
-    //   // Clear the form fields after successful login
-    //   closeModal()
-    // }
     closeModal();
   };
 
