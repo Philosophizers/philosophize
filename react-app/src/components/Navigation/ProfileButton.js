@@ -47,21 +47,25 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
+          <div className="wors1">
+            <div>{user.username}</div>
+            <div>{user.email}</div>
+            <div>
+              <button className="logoutButt" onClick={handleLogout}>Log Out</button>
+            </div>
+            </div>
           </>
         ) : (
           <>
-          <li>
+          <div className="wors">
+          <div className ="loginWors">
             <Link to="/login" onClick={closeMenu}>Log In</Link>
-            </li>
+            </div>
 
-<li>
+<div className ="signupWors">
               <Link to="/signup" onClick={closeMenu}>Sign Up</Link>
-            </li>
+            </div>
+            </div>
           </>
         )}
       </ul>
