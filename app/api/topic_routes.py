@@ -2,7 +2,7 @@ from flask import Blueprint, logging, request, jsonify
 from app.models import db, Topic, Vote
 from flask_login import login_required, current_user
 from datetime import datetime
-from sqlalchemy import func
+
 
 topic_routes = Blueprint('topics', __name__)
 
