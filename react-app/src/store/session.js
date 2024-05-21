@@ -14,83 +14,103 @@ const removeUser = () => ({
 const initialState = { user: null };
 
 export const authenticate = () => async (dispatch) => {
-	const response = await fetch("/api/auth/", {
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-	if (response.ok) {
-		const data = await response.json();
-		if (data.errors) {
-			return;
+	try {
+		const response = await fetch("/api/auth/", {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		if (response.ok) {
+			const data = await response.json();
+			if (data.errors) {
+				return;
+			}
+			dispatch(setUser(data));
+		} else {
+			const errorData = await response.json();
+			console.error("Authenticate Error:", errorData);
 		}
-
-		dispatch(setUser(data));
+	} catch (error) {
+		console.error("Network Error:", error);
 	}
 };
 
 export const login = (email, password) => async (dispatch) => {
-	const response = await fetch("/api/auth/login", {
-	  method: "POST",
-	  headers: {
-		"Content-Type": "application/json",
-	  },
-	  body: JSON.stringify({
-		email,
-		password,
-	  }),
-	  credentials: 'include', // Include cookies with the request
-	});
-
-	if (response.ok) {
-		const data = await response.json();
-		dispatch(setUser(data));
-		return null;
-	} else if (response.status < 500) {
-		const data = await response.json();
-		if (data.errors) {
-			return data.errors;
+	try {
+		const response = await fetch("/api/auth/login", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				email,
+				password,
+			}),
+			credentials: 'include', // Include cookies with the request
+		});
+		if (response.ok) {
+			const data = await response.json();
+			dispatch(setUser(data));
+			return null;
+		} else if (response.status < 500) {
+			const data = await response.json();
+			if (data.errors) {
+				return data.errors;
+			}
+		} else {
+			return ["An error occurred. Please try again."];
 		}
-	} else {
+	} catch (error) {
+		console.error("Network Error:", error);
 		return ["An error occurred. Please try again."];
 	}
 };
 
 export const logout = () => async (dispatch) => {
-	const response = await fetch("/api/auth/logout", {
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-
-	if (response.ok) {
-		dispatch(removeUser());
+	try {
+		const response = await fetch("/api/auth/logout", {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		if (response.ok) {
+			dispatch(removeUser());
+		} else {
+			const errorData = await response.json();
+			console.error("Logout Error:", errorData);
+		}
+	} catch (error) {
+		console.error("Network Error:", error);
 	}
 };
 
 export const signUp = (username, email, password) => async (dispatch) => {
-	const response = await fetch("/api/auth/signup", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			username,
-			email,
-			password,
-		}),
-	});
-
-	if (response.ok) {
-		const data = await response.json();
-		dispatch(setUser(data));
-		return null;
-	} else if (response.status < 500) {
-		const data = await response.json();
-		if (data.errors) {
-			return data.errors;
+	try {
+		const response = await fetch("/api/auth/signup", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				username,
+				email,
+				password,
+			}),
+		});
+		if (response.ok) {
+			const data = await response.json();
+			dispatch(setUser(data));
+			return null;
+		} else if (response.status < 500) {
+			const data = await response.json();
+			if (data.errors) {
+				return data.errors;
+			}
+		} else {
+			return ["An error occurred. Please try again."];
 		}
-	} else {
+	} catch (error) {
+		console.error("Network Error:", error);
 		return ["An error occurred. Please try again."];
 	}
 };
