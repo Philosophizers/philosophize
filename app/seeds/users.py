@@ -1,6 +1,7 @@
 from app.models import db, User
 from werkzeug.security import generate_password_hash
 from faker import Faker
+from app.models import db, User, Topic
 
 fake = Faker()
 
@@ -27,6 +28,6 @@ def seed_users():
     db.session.commit()
 
 def undo_users():
-    db.session.execute('DELETE FROM users;')
-    db.session.execute('DELETE FROM sqlite_sequence WHERE name="users";')  # Reset the auto-increment counter
+    db.session.execute('DELETE FROM topics;')  # Delete all topics first
+    db.session.execute('DELETE FROM users;')  # Now delete all users
     db.session.commit()
