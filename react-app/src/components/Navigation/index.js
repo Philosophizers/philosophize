@@ -17,7 +17,7 @@ function Navigation({ isLoaded }) {
           </NavLink>
         </li>
         <li className="brand-text">P H I L O S O P H I Z E</li>
-        <nav class="subhead-nav">
+        <nav className="subhead-nav">
           <NavLink to="/topics" className="navlink">
             topics
           </NavLink>

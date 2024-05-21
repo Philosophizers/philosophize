@@ -2,14 +2,13 @@
 
 /* Reset the list style and set up flexbox for the navigation */
 .navul {
-  background-color: rgb(246, 239, 239);
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   justify-content: space-between; /* This will space out the list items */
   align-items: center;
-  background: rgb(246, 239, 239);; /* Set a background color if needed */
+  background: #fff; /* Set a background color if needed */
   height: 60px; /* Adjust to your navbar's desired height */
   list-style-type: none;
 }

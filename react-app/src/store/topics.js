@@ -37,6 +37,8 @@ export const fetchTopics = () => async (dispatch) => {
 };
 
 
+
+
 export const updateTopic = (topic) => ({
   type: UPDATE_TOPIC,
   topic,
@@ -140,6 +142,16 @@ export const fetchTopicOfTheDay = () => async (dispatch) => {
   if (response.ok) {
     const topic = await response.json();
     dispatch(setTopicOfTheDay(topic));
+    return topic; // Return the fetched topic
+  }
+};
+
+// Thunk for fetching comments of the topic of the day
+export const fetchCommentsForTopic = (topicId) => async (dispatch) => {
+  const response = await fetch(`/api/comments/${topicId}`);
+  if (response.ok) {
+    const comments = await response.json();
+    dispatch(getComments(comments));
   }
 };
 
@@ -162,14 +174,7 @@ export const userHasVotedStatus = (hasVoted) => ({
 });
 
 
-// Thunk for fetching comments of the topic of the day
-export const fetchCommentsForTopic = (topicId) => async (dispatch) => {
-  const response = await fetch(`/api/comments/${topicId}`);
-  if (response.ok) {
-    const comments = await response.json();
-    dispatch(getComments(comments));
-  }
-};
+
 
 // export const castVote = (topicId) => async (dispatch) => {
 //   const response = await fetch(`/api/topics/${topicId}/vote`, {
