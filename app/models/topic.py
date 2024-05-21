@@ -1,3 +1,4 @@
+from app.models.vote import Vote
 from .db import db
 from datetime import datetime
 from .user import User
