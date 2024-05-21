@@ -9,23 +9,22 @@ const LandingPage = () => {
   const topicOfTheDay = useSelector((state) => state.topics.topicOfTheDay);
   const comments = useSelector((state) => Object.values(state.topics.comments));
 
-  const fetchTopicAndComments = () => {
-    dispatch(fetchTopicOfTheDay()).then((action) => {
-      const topic = action.payload;
-      if (topic) {
-        dispatch(fetchCommentsForTopic(topic.id));
-      }
-    });
-  };
+  useEffect(() => {
+    dispatch(fetchTopicOfTheDay());
+  }, [dispatch]);
 
   useEffect(() => {
-    fetchTopicAndComments();
-    const interval = setInterval(fetchTopicAndComments, 10000); // Poll every 10 seconds
-    return () => clearInterval(interval); // Cleanup on component unmount
-  }, [dispatch]);
+    if (topicOfTheDay) {
+      dispatch(fetchCommentsForTopic(topicOfTheDay.id));
+    }
+  }, [dispatch, topicOfTheDay]);
 
   return (
     <div className="landing-page-container">
+      {/* <div className="pillar left-pillar"> */}
+        {/* Pillar image here */}
+        {/* <img src={pillarImage} alt="Pillar" />
+      </div> */}
       <div className="topic-of-the-day-container">
         <h3>today's discussion:</h3>
         {topicOfTheDay ? (
@@ -62,6 +61,10 @@ const LandingPage = () => {
           <p>Loading topic...</p>
         )}
       </div>
+      {/* <div className="pillar right-pillar"> */}
+        {/* Pillar image here */}
+        {/* <img src={pillarImage} alt="Pillar" />
+      </div> */}
     </div>
   );
 };

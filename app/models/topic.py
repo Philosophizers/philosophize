@@ -1,5 +1,4 @@
 from .db import db
-from .vote import Vote
 from datetime import datetime
 from .user import User
 
@@ -7,15 +6,14 @@ class Topic(db.Model):
     __tablename__ = 'topics'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_topics_user_id', ondelete='CASCADE'), nullable=False)  # Owner of the topic
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id, name='fk_topics_user_id'), nullable=False)
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    topic_of_the_day = db.Column(db.Boolean, default=False)  # New field to mark Topic of the Day
+    topic_of_the_day = db.Column(db.Boolean, default=False)
 
-    # Relationships
     user = db.relationship('User', backref='topics')
     votes = db.relationship('Vote', back_populates='topic')
     comments = db.relationship('Comment', back_populates='topic')
@@ -35,6 +33,4 @@ class Topic(db.Model):
             'updated_at': self.updated_at.isoformat(),
             'vote_count': self.vote_count,
             'topic_of_the_day': self.topic_of_the_day,
-            # 'comments': [comment.to_dict() for comment in self.comments],
-            # 'resources': [resource.to_dict() for resource in self.resources]
         }
