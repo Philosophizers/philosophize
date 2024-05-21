@@ -7,7 +7,7 @@ class Topic(db.Model):
     __tablename__ = 'topics'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id, ondelete='CASCADE'), nullable=False)  # Owner of the topic
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', name='fk_topics_user_id', ondelete='CASCADE'), nullable=False)  # Owner of the topic
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -17,9 +17,9 @@ class Topic(db.Model):
 
     # Relationships
     user = db.relationship('User', backref='topics')
-    votes = db.relationship('Vote', back_populates='topic', cascade="all, delete-orphan")
-    comments = db.relationship('Comment', back_populates='topic', cascade="all, delete-orphan")
-    resources = db.relationship('Resource', back_populates='topic', cascade="all, delete-orphan")
+    votes = db.relationship('Vote', back_populates='topic')
+    comments = db.relationship('Comment', back_populates='topic')
+    resources = db.relationship('Resource', back_populates='topic')
 
     @property
     def vote_count(self):
