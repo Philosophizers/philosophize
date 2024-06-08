@@ -1,12 +1,11 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import "./Navigation.css";
 import ProfileButton from "./ProfileButton";
 import thinkerImage from "./thinker.png";
-import "./Navigation.css";
 
-function Navigation({ isLoaded }) {
-  const sessionUser = useSelector((state) => state.session.user);
+function Navigation({ isLoaded }: { isLoaded: boolean }) {
+  const sessionUser = useSelector((state: any) => state.session.user);
 
   return (
     <header>

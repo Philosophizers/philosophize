@@ -1,42 +1,56 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Topic from "./Topic";
-import TopicForm from "./TopicForm";
 import {
-  fetchTopics,
-  editTopic,
-  createTopic,
-  removeTopic,
+  castVote,
   checkUserVote,
+  createTopic,
+  editTopic,
+  fetchTopics,
+  removeTopic,
+  removeVote,
 } from "../../store/topics";
-import { castVote, removeVote } from "../../store/topics";
-import Modal from "./TopicModal";
+import Topic from "./Topic";
 import ConfirmationModal from "./TopicDeleteConfirm";
+import TopicForm from "./TopicForm";
+import Modal from "./TopicModal";
 
 import { useHistory } from "react-router-dom";
 import "./topic.css";
 
+interface TopicInterface {
+  id: number;
+  title: string;
+  description: string;
+  user_id: number;
+  created_at: string;
+}
+
 const TopicList = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const topics = useSelector((state) => Object.values(state.topics));
+  const topics = useSelector(({ state }: { state: any }) =>
+    Object.values(state.topics)
+  );
   // let topics = useSelector((state) => state.topics);
   // topics = Object.values(topics);
-  const user = useSelector((state) => state.session.user);
+  const user = useSelector(({ state }: { state: any }) => state.session.user);
   const [showForm, setShowForm] = useState(false);
   const [editingTopic, setEditingTopic] = useState(null); // maybe change out of null
 
-  const topicsObject = useSelector((state) => state.topics);
+  const topicsObject = useSelector(({ state }: { state: any }) => state.topics);
   const topicsArray = topicsObject && Object.values(topicsObject);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState("create");
+  const [modalMode, setModalMode] = useState<TopicInterface | null>("create");
 
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const [topicToDelete, setTopicToDelete] = useState(null);
+  const [topicToDelete, setTopicToDelete] = useState<TopicInterface | null>(
+    null
+  );
 
   const sortedTopics = topicsArray.sort(
-    (a, b) => new Date(b?.created_at) - new Date(a?.created_at)
+    ({ a, b }: { a: any; b: any }) =>
+      new Date(b?.created_at) - new Date(a?.created_at)
   );
 
   useEffect(() => {
@@ -51,7 +65,7 @@ const TopicList = () => {
     history.push("/login"); // Redirect to login page
   };
 
-  const handleCreateTopic = async (topicData) => {
+  const handleCreateTopic = async (topicData: any) => {
     try {
       const res = await dispatch(createTopic(topicData));
       if (!res.errors) {
@@ -74,7 +88,7 @@ const TopicList = () => {
     setEditingTopic(null);
   };
 
-  const handleEditTopic = async (topicId, topicData) => {
+  const handleEditTopic = async (topicId: number, topicData: any) => {
     try {
       const res = await dispatch(editTopic(topicId, topicData));
       if (!res.errors) {
@@ -88,7 +102,7 @@ const TopicList = () => {
     }
   };
 
-  const handleDeleteClick = (topic) => {
+  const handleDeleteClick = (topic: TopicInterface) => {
     // Save the topic to delete and show confirmation modal
     setTopicToDelete(topic);
     setShowDeleteConfirmation(true);
@@ -107,7 +121,7 @@ const TopicList = () => {
     closeDeleteConfirmation();
   };
 
-  const handleDeleteTopic = async (topicId) => {
+  const handleDeleteTopic = async (topicId: number) => {
     try {
       const response = await fetch(`/api/topics/${topicId}`, {
         method: "DELETE",
@@ -121,11 +135,11 @@ const TopicList = () => {
     }
   };
 
-  const handleEditClick = (topic) => {
+  const handleEditClick = (topic: Topic) => {
     openModal("edit", topic);
   };
 
-  const handleVote = (topicId) => {
+  const handleVote = (topicId: number) => {
     if (!user) {
       alert("You must be logged in to vote");
       return;
@@ -133,10 +147,9 @@ const TopicList = () => {
     dispatch(castVote(topicId));
   };
 
-  const handleUnvote = (topicId) => {
+  const handleUnvote = (topicId: number) => {
     dispatch(removeVote(topicId));
   };
-
 
   const handleCancelEdit = () => {
     setEditingTopic(null); // Exit editing mode without saving
@@ -151,7 +164,7 @@ const TopicList = () => {
     return <p>Error: Topics data is not an array.</p>;
   }
 
-  const openModal = (mode, topic = null) => {
+  const openModal = (mode: any, topic = null) => {
     setModalMode(mode);
     setEditingTopic(topic);
     setIsModalOpen(true);
@@ -205,10 +218,10 @@ const TopicList = () => {
         </Modal>
 
         <div className="toptop">
-          <ul className = "toptoptop">
+          <ul className="toptoptop">
             {sortedTopics.length > 0 &&
               sortedTopics.map(
-                (topic) =>
+                (topic: TopicInterface) =>
                   topic && (
                     <Topic
                       key={topic.id}
@@ -227,7 +240,8 @@ const TopicList = () => {
           <ConfirmationModal
             isOpen={showDeleteConfirmation}
             onClose={closeDeleteConfirmation}
-            onConfirm={confirmDelete}>
+            onConfirm={confirmDelete}
+          >
             Are you sure you want to delete your topic proposal?
           </ConfirmationModal>
         </div>

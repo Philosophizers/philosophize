@@ -1,36 +1,51 @@
-import React, { useEffect, useState } from "react";
+"use client";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import {
-  fetchTopicOfTheDay,
   createComment,
   editComment,
-  removeComment,
   fetchCommentsForTopic,
+  fetchTopicOfTheDay,
+  removeComment,
 } from "../../store/topics";
 import ConfirmationModal from "../Topics/TopicDeleteConfirm";
-import thethinker from "./thethinker.png";
 import "./CommentsPage.css";
+import thethinker from "./thethinker.png";
+
+interface com {
+  id: number;
+  user_id: number;
+  username: string;
+  content: string;
+}
 
 const CommentsPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const topicOfTheDay = useSelector((state) => state.topics.topicOfTheDay);
-  const comments = useSelector((state) => Object.values(state.topics.comments));
+  const topicOfTheDay = useSelector(
+    ({ state }: { state: any }) => state.topics.topicOfTheDay
+  );
+  const comments = useSelector(({ state }: { state: any }) =>
+    Object.values(state.topics.comments)
+  );
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const [editCommentId, setEditCommentId] = useState(null);
+  const [editCommentId, setEditCommentId] = useState<number | null>(null);
   const [editedContent, setEditedContent] = useState("");
-  const [editingErrors, setEditingErrors] = useState({});
-  const user = useSelector((state) => state.session.user);
+  const [editingErrors, setEditingErrors] = useState<{ [key: number]: string }>(
+    {}
+  );
+  const user = useSelector(({ state }: { state: any }) => state.session.user);
   const currentUserId = user?.id;
 
   const [contentError, setContentError] = useState("");
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const [commentToDelete, setCommentToDelete] = useState(null);
+  const [commentToDelete, setCommentToDelete] = useState<number | null>(null);
   const { openModal } = useModal();
 
   useEffect(() => {
@@ -57,7 +72,7 @@ const CommentsPage = () => {
     history.push("/login", { from: location });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (contentError || content.length === 0) {
       return;
@@ -73,7 +88,7 @@ const CommentsPage = () => {
     }
   };
 
-  const handleEdit = (comment) => {
+  const handleEdit = (comment: com) => {
     setEditCommentId(comment.id);
     setEditedContent(comment.content);
     setEditingErrors({}); // Clear any previous editing errors
@@ -89,7 +104,7 @@ const CommentsPage = () => {
     openModal("login");
   };
 
-  const handleUpdate = async (commentId) => {
+  const handleUpdate = async (commentId: number) => {
     // Check if the edited content meets the length requirement
     if (editedContent.trim().length < 50) {
       setContentError("Content must be at least 50 characters");
@@ -109,7 +124,7 @@ const CommentsPage = () => {
     }
   };
 
-  const handleDelete = async (commentId) => {
+  const handleDelete = async (commentId: number) => {
     try {
       await dispatch(removeComment(commentId));
       dispatch(fetchCommentsForTopic(topicOfTheDay.id)); // Refresh comments
@@ -118,7 +133,7 @@ const CommentsPage = () => {
     }
   };
 
-  const handleDeleteClick = (commentId) => {
+  const handleDeleteClick = (commentId: number) => {
     setCommentToDelete(commentId);
     setShowDeleteConfirmation(true);
   };
@@ -148,7 +163,11 @@ const CommentsPage = () => {
         <>
           <div className="comment-topic">{topicOfTheDay.title}</div>
           <div className="comment-section">
-            <img src={thethinker} alt="Topic Image" className="comment-image" />
+            <Image
+              src={thethinker}
+              alt="Topic Image"
+              className="comment-image"
+            />
             {/* {comments.map((comment) => (
               <div key={comment.id} className="comment">
                 {editCommentId === comment.id ? (
@@ -163,7 +182,7 @@ const CommentsPage = () => {
                   </p>
                 )} */}
 
-            {comments.map((comment) => (
+            {comments.map(({ comment }: { comment: com }) => (
               <div
                 key={comment.id}
                 className="

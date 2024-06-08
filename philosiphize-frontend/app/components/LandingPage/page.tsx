@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTopicOfTheDay, fetchCommentsForTopic } from "../../store/topics";
-import pillarImage from "./pillar.png";
+import { fetchCommentsForTopic, fetchTopicOfTheDay } from "../../store/topics";
 import "./landing.css";
 
 const LandingPage = () => {
@@ -22,8 +21,8 @@ const LandingPage = () => {
   return (
     <div className="landing-page-container">
       {/* <div className="pillar left-pillar"> */}
-        {/* Pillar image here */}
-        {/* <img src={pillarImage} alt="Pillar" />
+      {/* Pillar image here */}
+      {/* <img src={pillarImage} alt="Pillar" />
       </div> */}
       <div className="topic-of-the-day-container">
         <h3>today's discussion:</h3>
@@ -62,8 +61,8 @@ const LandingPage = () => {
         )}
       </div>
       {/* <div className="pillar right-pillar"> */}
-        {/* Pillar image here */}
-        {/* <img src={pillarImage} alt="Pillar" />
+      {/* Pillar image here */}
+      {/* <img src={pillarImage} alt="Pillar" />
       </div> */}
     </div>
   );

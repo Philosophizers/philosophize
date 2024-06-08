@@ -1,18 +1,17 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import SignupFormPage from "./components/SignupFormPage";
-import SignupFormModal from "./components/SignupFormModal";
-import LoginFormModal from "./components/LoginFormModal";
+import LoginFormModal from "./components/LoginFormModal/page";
+import Navigation from "./components/Navigation/page";
+import SignupFormPage from "./components/SignupFormPage/page";
 import { authenticate } from "./store/session";
-import Navigation from "./components/Navigation";
 
-import LandingPage from "./components/LandingPage/LandingPage";
+import AboutPage from "./components/AboutPage/AboutPage";
+import CommentsPage from "./components/CommentsPage/page";
+import LandingPage from "./components/LandingPage/page";
 import CreateTopicForm from "./components/Topics/TopicForm";
 import TopicList from "./components/Topics/TopicList";
-import CommentsPage from "./components/CommentsPage/CommentsPage";
-import AboutPage from "./components/AboutPage/AboutPage";
 
 function App() {
   const dispatch = useDispatch();
